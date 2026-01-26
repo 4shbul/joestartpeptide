@@ -17,3 +17,7 @@
 - [x] Implement chart filtering by category
 - [x] Add chart data visualization with Chart.js
 - [x] Remove payment method and redirect directly to WhatsApp for order continuation
+- [x] Fix text visibility in hero section (change gray text to white for better contrast)
+- [x] Optimize chatbot features with more quick reply buttons for common questions
+- [x] Clean up interface to make it more neat and organized
+- [x] Fix chatbot functionality with intelligent local responses
