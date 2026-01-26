@@ -887,13 +887,13 @@
                             <i class="fas fa-flask mr-2"></i>
                             Teknologi Peptida Premium
                         </div>
-                        <h1 class="text-5xl lg:text-7xl font-black bg-gradient-to-r from-white via-red-200 to-pink-200 bg-clip-text text-transparent leading-tight">
+                        <h1 class="text-5xl lg:text-7xl font-black text-white leading-tight">
                             GET STRONG WITH
-                            <span class="block text-4xl lg:text-6xl bg-gradient-to-r from-red-400 to-pink-400 bg-clip-text text-transparent">
+                            <span class="block text-4xl lg:text-6xl text-red-400">
                                 JOESTAR WAY
                             </span>
                         </h1>
-                        <p class="text-xl text-gray-300 leading-relaxed max-w-lg mx-auto">
+                        <p class="text-xl text-gray-100 leading-relaxed max-w-lg mx-auto">
                             Temukan peptida premium yang dibuat dengan bioteknologi canggih untuk kesehatan, performa, dan umur panjang yang optimal. Alami masa depan kesehatan hari ini.
                         </p>
                     </div>
@@ -1270,7 +1270,7 @@
     </div>
 
     <!-- Chatbot Modal -->
-    <div id="chatbot-modal" class="fixed bottom-24 right-6 w-96 h-[500px] bg-white rounded-2xl shadow-2xl hidden z-50 flex flex-col">
+    <div id="chatbot-modal" class="fixed bottom-24 right-6 w-96 h-[600px] bg-white rounded-2xl shadow-2xl hidden z-50 flex flex-col">
         <!-- Chat Header -->
         <div class="bg-gradient-to-r from-red-500 to-pink-500 text-white p-4 rounded-t-2xl flex items-center justify-between">
             <div class="flex items-center space-x-3">
@@ -1295,9 +1295,21 @@
                         <i class="fas fa-robot text-white text-xs"></i>
                     </div>
                     <div class="flex-1">
-                            <p class="text-sm navy font-medium">Halo! Saya adalah asisten konsultasi peptide JOESTAR. Saya bisa membantu Anda dengan pertanyaan tentang kesehatan tubuh, peptida, dan rekomendasi produk. Apa yang ingin Anda tanyakan?</p>
+                        <p class="text-sm navy font-medium">Halo! Saya adalah asisten konsultasi peptide JOESTAR. Saya bisa membantu Anda dengan pertanyaan tentang kesehatan tubuh, peptida, dan rekomendasi produk. Apa yang ingin Anda tanyakan?</p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <button class="quick-reply bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs hover:bg-red-200 transition-colors" onclick="sendQuickReply('Apa itu peptida?')">Apa itu peptida?</button>
+                            <button class="quick-reply bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs hover:bg-red-200 transition-colors" onclick="sendQuickReply('Produk rekomendasi')">Produk rekomendasi</button>
+                            <button class="quick-reply bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs hover:bg-red-200 transition-colors" onclick="sendQuickReply('Cara pesan')">Cara pesan</button>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Quick Replies Container -->
+        <div id="quick-replies" class="px-4 pb-2 bg-white border-t border-gray-100 hidden">
+            <div class="flex flex-wrap gap-2 py-2">
+                <!-- Dynamic quick replies will be added here -->
             </div>
         </div>
 
@@ -1308,6 +1320,10 @@
                 <button id="chat-send" class="bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full w-10 h-10 flex items-center justify-center hover:scale-105 transition-transform">
                     <i class="fas fa-paper-plane text-sm"></i>
                 </button>
+            </div>
+            <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
+                <span id="chat-status">Online</span>
+                <span id="message-count">0 pesan</span>
             </div>
         </div>
     </div>
@@ -2049,6 +2065,7 @@
 
         // Chatbot functionality
         let chatbotMessages = [];
+        let messageCount = 0;
 
         function initializeChatbot() {
             const chatbotToggle = document.getElementById('chatbot-toggle');
@@ -2060,6 +2077,9 @@
             // Toggle chatbot modal
             chatbotToggle.addEventListener('click', () => {
                 chatbotModal.classList.toggle('hidden');
+                if (!chatbotModal.classList.contains('hidden')) {
+                    updateMessageCount();
+                }
             });
 
             // Close chatbot modal
@@ -2076,6 +2096,18 @@
                     sendMessage();
                 }
             });
+
+            // Initialize message count
+            updateMessageCount();
+        }
+
+        function sendQuickReply(message) {
+            document.getElementById('chat-input').value = message;
+            sendMessage();
+        }
+
+        function updateMessageCount() {
+            document.getElementById('message-count').textContent = messageCount + ' pesan';
         }
 
         function sendMessage() {
