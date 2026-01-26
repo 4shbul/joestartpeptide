@@ -1262,6 +1262,56 @@
 
 
 
+    <!-- Chatbot Widget -->
+    <div id="chatbot-widget" class="fixed bottom-6 right-6 z-50">
+        <button id="chatbot-toggle" class="bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full w-16 h-16 flex items-center justify-center shadow-2xl hover:scale-110 transition-transform duration-300">
+            <i class="fas fa-comments text-xl"></i>
+        </button>
+    </div>
+
+    <!-- Chatbot Modal -->
+    <div id="chatbot-modal" class="fixed bottom-24 right-6 w-96 h-[500px] bg-white rounded-2xl shadow-2xl hidden z-50 flex flex-col">
+        <!-- Chat Header -->
+        <div class="bg-gradient-to-r from-red-500 to-pink-500 text-white p-4 rounded-t-2xl flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                    <i class="fas fa-robot text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="font-semibold">Konsultasi Peptide</h3>
+                    <p class="text-sm opacity-90">Tanya tentang kesehatan & peptida</p>
+                </div>
+            </div>
+            <button id="chatbot-close" class="text-white hover:text-gray-200">
+                <i class="fas fa-times text-lg"></i>
+            </button>
+        </div>
+
+        <!-- Chat Messages -->
+        <div id="chat-messages" class="flex-1 p-4 overflow-y-auto bg-gray-50">
+            <div class="bot-message bg-white rounded-lg p-3 mb-3 shadow-sm">
+                <div class="flex items-start space-x-2">
+                    <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                        <i class="fas fa-robot text-white text-xs"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm text-gray-800">Halo! Saya adalah asisten konsultasi peptide JOESTAR. Saya bisa membantu Anda dengan pertanyaan tentang kesehatan tubuh, peptida, dan rekomendasi produk. Apa yang ingin Anda tanyakan?</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chat Input -->
+        <div class="p-4 border-t bg-white rounded-b-2xl">
+            <div class="flex space-x-2">
+                <input type="text" id="chat-input" placeholder="Ketik pertanyaan Anda..." class="flex-1 px-3 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                <button id="chat-send" class="bg-gradient-to-r from-red-500 to-pink-500 text-white rounded-full w-10 h-10 flex items-center justify-center hover:scale-105 transition-transform">
+                    <i class="fas fa-paper-plane text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1997,10 +2047,169 @@
 
 
 
+        // Chatbot functionality
+        let chatbotMessages = [];
+
+        function initializeChatbot() {
+            const chatbotToggle = document.getElementById('chatbot-toggle');
+            const chatbotModal = document.getElementById('chatbot-modal');
+            const chatbotClose = document.getElementById('chatbot-close');
+            const chatInput = document.getElementById('chat-input');
+            const chatSend = document.getElementById('chat-send');
+
+            // Toggle chatbot modal
+            chatbotToggle.addEventListener('click', () => {
+                chatbotModal.classList.toggle('hidden');
+            });
+
+            // Close chatbot modal
+            chatbotClose.addEventListener('click', () => {
+                chatbotModal.classList.add('hidden');
+            });
+
+            // Send message on button click
+            chatSend.addEventListener('click', sendMessage);
+
+            // Send message on Enter key
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+        }
+
+        function sendMessage() {
+            const chatInput = document.getElementById('chat-input');
+            const message = chatInput.value.trim();
+
+            if (message === '') return;
+
+            // Add user message
+            addMessage(message, 'user');
+
+            // Clear input
+            chatInput.value = '';
+
+            // Simulate bot response
+            setTimeout(() => {
+                const response = getBotResponse(message);
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+
+        function addMessage(text, sender) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = sender === 'user' ? 'user-message bg-red-500 rounded-lg p-3 mb-3 ml-auto max-w-xs' : 'bot-message bg-white rounded-lg p-3 mb-3 shadow-sm';
+
+            if (sender === 'bot') {
+                messageDiv.innerHTML = `
+                    <div class="flex items-start space-x-2">
+                        <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-robot text-white text-xs"></i>
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm text-gray-800">${text}</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="flex items-end justify-end">
+                        <div class="bg-red-500 text-white rounded-lg p-3 max-w-xs">
+                            <p class="text-sm">${text}</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function getBotResponse(message) {
+            const lowerMessage = message.toLowerCase();
+
+            // Basic keyword matching for peptide-related questions
+            if (lowerMessage.includes('retatrutide') || lowerMessage.includes('metabolic')) {
+                return 'Retatrutide adalah peptida metabolik canggih yang membantu mengoptimalkan metabolisme tubuh, meningkatkan pembakaran lemak, dan meningkatkan sensitivitas insulin. Cocok untuk manajemen berat badan dan optimasi energi.';
+            }
+
+            if (lowerMessage.includes('cjc-1295') || lowerMessage.includes('ipamorelin') || lowerMessage.includes('growth hormone')) {
+                return 'CJC-1295 + Ipamorelin adalah kombinasi peptida yang merangsang produksi hormon pertumbuhan alami. Membantu meningkatkan massa otot, pemulihan, dan kualitas tidur.';
+            }
+
+            if (lowerMessage.includes('ghk-cu') || lowerMessage.includes('anti-aging') || lowerMessage.includes('kulit')) {
+                return 'GHK-Cu adalah peptida perbaikan jaringan dan anti-penuaan yang mendukung regenerasi kulit, penyembuhan luka, dan kesehatan seluler. Baik untuk kesehatan kulit dan vitalitas.';
+            }
+
+            if (lowerMessage.includes('semax') || lowerMessage.includes('cognitive') || lowerMessage.includes('otak')) {
+                return 'Semax adalah peptida peningkat kognitif yang mendukung fungsi otak, memori, dan fokus. Membantu meningkatkan kinerja mental dan neuroproteksi.';
+            }
+
+            if (lowerMessage.includes('selank') || lowerMessage.includes('anxiety') || lowerMessage.includes('kecemasan')) {
+                return 'Selank adalah peptida yang mengurangi kecemasan dan mendukung fungsi kognitif. Membantu mengelola stres dan meningkatkan ketenangan mental.';
+            }
+
+            if (lowerMessage.includes('mots-c') || lowerMessage.includes('metabolic activator')) {
+                return 'MOTS-c adalah peptida pengaktif metabolik yang meningkatkan metabolisme energi, sensitivitas insulin, dan fungsi mitokondria. Baik untuk kesehatan metabolik.';
+            }
+
+            if (lowerMessage.includes('dsip') || lowerMessage.includes('sleep') || lowerMessage.includes('tidur')) {
+                return 'DSIP adalah peptida yang meningkatkan kualitas tidur dan pemulihan. Membantu mengatur pola tidur dan mendukung pemulihan tubuh.';
+            }
+
+            if (lowerMessage.includes('hgh') || lowerMessage.includes('hormon pertumbuhan')) {
+                return 'HGH 191AA adalah hormon pertumbuhan manusia rekombinan yang mendukung pertumbuhan otot, kekuatan tulang, dan vitalitas keseluruhan.';
+            }
+
+            if (lowerMessage.includes('kisspeptin') || lowerMessage.includes('hormone regulation')) {
+                return 'Kisspeptin adalah peptida pengatur hormon yang mendukung regulasi hormon alami dan fungsi endokrin.';
+            }
+
+            if (lowerMessage.includes('dosis') || lowerMessage.includes('dose') || lowerMessage.includes('penggunaan')) {
+                return 'Dosis peptida bervariasi tergantung jenisnya. Untuk saran dosis yang tepat, konsultasikan dengan ahli kesehatan atau dokter. Kami merekomendasikan memulai dengan dosis terendah dan berkonsultasi dengan profesional medis.';
+            }
+
+            if (lowerMessage.includes('efek samping') || lowerMessage.includes('side effects') || lowerMessage.includes('aman')) {
+                return 'Peptida kami diproduksi dengan standar kualitas tinggi dan diuji laboratorium. Namun, seperti suplemen lainnya, beberapa orang mungkin mengalami efek samping ringan. Selalu konsultasikan dengan dokter sebelum penggunaan.';
+            }
+
+            if (lowerMessage.includes('penyimpanan') || lowerMessage.includes('storage') || lowerMessage.includes('simpan')) {
+                return 'Simpan peptida di tempat sejuk dan kering, jauh dari sinar matahari langsung. Beberapa peptida mungkin memerlukan refrigerasi. Ikuti instruksi penyimpanan spesifik untuk setiap produk.';
+            }
+
+            if (lowerMessage.includes('harga') || lowerMessage.includes('price') || lowerMessage.includes('biaya')) {
+                return 'Harga peptida kami bervariasi tergantung jenis dan jumlah. Kunjungi halaman produk kami untuk informasi harga terkini. Kami menawarkan pengiriman gratis untuk pesanan tertentu.';
+            }
+
+            if (lowerMessage.includes('pesan') || lowerMessage.includes('order') || lowerMessage.includes('beli')) {
+                return 'Untuk memesan, tambahkan produk ke keranjang dan ikuti proses checkout. Kami akan menghubungi Anda melalui WhatsApp untuk konfirmasi pengiriman. Pengiriman dilakukan secara aman dan terpercaya.';
+            }
+
+            // Default responses
+            if (lowerMessage.includes('halo') || lowerMessage.includes('hi') || lowerMessage.includes('hello')) {
+                return 'Halo! Selamat datang di konsultasi peptide JOESTAR. Saya siap membantu Anda dengan pertanyaan tentang kesehatan tubuh dan produk peptide kami. Apa yang ingin Anda ketahui?';
+            }
+
+            if (lowerMessage.includes('terima kasih') || lowerMessage.includes('thanks')) {
+                return 'Sama-sama! Jika Anda memiliki pertanyaan lain tentang peptide atau kesehatan tubuh, jangan ragu untuk bertanya. Semoga informasi ini bermanfaat!';
+            }
+
+            // General health questions
+            if (lowerMessage.includes('kesehatan') || lowerMessage.includes('health') || lowerMessage.includes('tubuh') || lowerMessage.includes('body')) {
+                return 'Kesehatan tubuh adalah prioritas utama. Peptida kami dirancang untuk mendukung berbagai aspek kesehatan seperti metabolisme, kognitif, pemulihan, dan anti-penuaan. Apa aspek kesehatan spesifik yang ingin Anda ketahui?';
+            }
+
+            // Fallback response
+            return 'Maaf, saya tidak sepenuhnya memahami pertanyaan Anda. Bisakah Anda memberikan lebih detail tentang apa yang ingin Anda ketahui mengenai peptide atau kesehatan tubuh? Saya siap membantu dengan informasi tentang produk kami, penggunaan, atau manfaat kesehatan.';
+        }
+
         // Initialize
         updateCartDisplay();
         checkAuthStatus();
         initializeChart();
+        initializeChatbot();
     </script>
 </body>
 </html>
