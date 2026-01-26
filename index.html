@@ -893,7 +893,7 @@
                                 JOESTAR WAY
                             </span>
                         </h1>
-                        <p class="text-xl text-gray-100 leading-relaxed max-w-lg mx-auto">
+                        <p class="text-xl text-white leading-relaxed max-w-lg mx-auto">
                             Temukan peptida premium yang dibuat dengan bioteknologi canggih untuk kesehatan, performa, dan umur panjang yang optimal. Alami masa depan kesehatan hari ini.
                         </p>
                     </div>
@@ -926,10 +926,17 @@
     </section>
 
     <!-- Products Section -->
-    <section id="products" class="py-20 bg-white">
+    <section id="products" class="py-32 bg-gradient-to-b from-white via-gray-50/30 to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold navy text-center mb-12">Premium Peptide Collection</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+            <div class="text-center mb-20">
+                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-50 to-pink-50 border border-red-100 rounded-full mb-6">
+                    <i class="fas fa-flask text-red-500 mr-3"></i>
+                    <span class="text-red-700 font-medium">Premium Peptide Collection</span>
+                </div>
+                <h2 class="text-4xl lg:text-6xl font-black navy mb-6 leading-tight">Scientifically Formulated<br><span class="text-3xl lg:text-4xl font-bold text-gray-600">for Optimal Health</span></h2>
+                <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">Each peptide is meticulously crafted using cutting-edge biotechnology, ensuring maximum purity, efficacy, and safety for your health optimization journey.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 lg:gap-12">
                         <!-- Product Card 1 -->
                         <div class="product-card">
                             <div class="molecular-structure"></div>
@@ -1300,6 +1307,9 @@
                             <button class="quick-reply bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs hover:bg-red-200 transition-colors" onclick="sendQuickReply('Apa itu peptida?')">Apa itu peptida?</button>
                             <button class="quick-reply bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs hover:bg-red-200 transition-colors" onclick="sendQuickReply('Produk rekomendasi')">Produk rekomendasi</button>
                             <button class="quick-reply bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs hover:bg-red-200 transition-colors" onclick="sendQuickReply('Cara pesan')">Cara pesan</button>
+                            <button class="quick-reply bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs hover:bg-pink-200 transition-colors" onclick="sendQuickReply('Efek samping')">Efek samping</button>
+                            <button class="quick-reply bg-pink-100 text-pink-700 px-3 py-1 rounded-full text-xs hover:bg-pink-200 transition-colors" onclick="sendQuickReply('Dosis aman')">Dosis aman</button>
+                            <button class="quick-reply bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs hover:bg-purple-200 transition-colors" onclick="sendQuickReply('Harga produk')">Harga produk</button>
                         </div>
                     </div>
                 </div>
@@ -2064,8 +2074,8 @@
 
 
         // Chatbot functionality
-        let chatbotMessages = [];
-        let messageCount = 0;
+        let chatbotMessages = JSON.parse(localStorage.getItem('joestarChatMessages')) || [];
+        let messageCount = chatbotMessages.length;
 
         function initializeChatbot() {
             const chatbotToggle = document.getElementById('chatbot-toggle');
@@ -2074,11 +2084,15 @@
             const chatInput = document.getElementById('chat-input');
             const chatSend = document.getElementById('chat-send');
 
+            // Load previous messages
+            loadChatHistory();
+
             // Toggle chatbot modal
             chatbotToggle.addEventListener('click', () => {
                 chatbotModal.classList.toggle('hidden');
                 if (!chatbotModal.classList.contains('hidden')) {
                     updateMessageCount();
+                    chatInput.focus();
                 }
             });
 
@@ -2092,7 +2106,8 @@
 
             // Send message on Enter key
             chatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
                     sendMessage();
                 }
             });
