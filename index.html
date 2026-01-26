@@ -1295,7 +1295,7 @@
                         <i class="fas fa-robot text-white text-xs"></i>
                     </div>
                     <div class="flex-1">
-                        <p class="text-sm text-gray-800">Halo! Saya adalah asisten konsultasi peptide JOESTAR. Saya bisa membantu Anda dengan pertanyaan tentang kesehatan tubuh, peptida, dan rekomendasi produk. Apa yang ingin Anda tanyakan?</p>
+                            <p class="text-sm navy font-medium">Halo! Saya adalah asisten konsultasi peptide JOESTAR. Saya bisa membantu Anda dengan pertanyaan tentang kesehatan tubuh, peptida, dan rekomendasi produk. Apa yang ingin Anda tanyakan?</p>
                     </div>
                 </div>
             </div>
@@ -2132,11 +2132,19 @@
                 // Show typing indicator
                 addTypingIndicator();
 
+                // Get API key from environment or configuration
+                // IMPORTANT: Replace 'YOUR_OPENAI_API_KEY_HERE' with your actual OpenAI API key
+                const apiKey = 'YOUR_OPENAI_API_KEY_HERE';
+
+                if (apiKey === 'YOUR_OPENAI_API_KEY_HERE' || !apiKey) {
+                    throw new Error('OpenAI API key not configured. Please replace YOUR_OPENAI_API_KEY_HERE with your actual API key.');
+                }
+
                 const response = await fetch('https://api.openai.com/v1/chat/completions', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer YOUR_OPENAI_API_KEY_HERE' // Replace with your API key
+                        'Authorization': `Bearer ${apiKey}`
                     },
                     body: JSON.stringify({
                         model: 'gpt-3.5-turbo',
@@ -2178,7 +2186,8 @@ JAWAB DALAM BAHASA INDONESIA dengan ramah, profesional, dan informatif. Jika per
                 removeTypingIndicator();
 
                 if (!response.ok) {
-                    throw new Error('API request failed');
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(`API Error: ${response.status} - ${errorData.error?.message || 'Unknown error'}`);
                 }
 
                 const data = await response.json();
@@ -2188,7 +2197,7 @@ JAWAB DALAM BAHASA INDONESIA dengan ramah, profesional, dan informatif. Jika per
                 console.error('Chatbot API error:', error);
                 removeTypingIndicator();
 
-                // Fallback responses if API fails
+                // Enhanced fallback responses
                 const lowerMessage = message.toLowerCase();
 
                 if (lowerMessage.includes('halo') || lowerMessage.includes('hi') || lowerMessage.includes('hello')) {
@@ -2199,7 +2208,68 @@ JAWAB DALAM BAHASA INDONESIA dengan ramah, profesional, dan informatif. Jika per
                     return 'Sama-sama! Jika Anda memiliki pertanyaan lain tentang peptide atau kesehatan tubuh, jangan ragu untuk bertanya. Semoga informasi ini bermanfaat!';
                 }
 
-                return 'Maaf, saya sedang mengalami gangguan teknis. Silakan coba lagi atau hubungi kami langsung melalui WhatsApp untuk bantuan segera.';
+                if (lowerMessage.includes('retatrutide') || lowerMessage.includes('metabolic')) {
+                    return 'Retatrutide adalah peptida metabolik canggih yang membantu mengoptimalkan metabolisme tubuh, meningkatkan pembakaran lemak, dan meningkatkan sensitivitas insulin. Cocok untuk manajemen berat badan dan optimasi energi.';
+                }
+
+                if (lowerMessage.includes('cjc-1295') || lowerMessage.includes('ipamorelin') || lowerMessage.includes('growth hormone')) {
+                    return 'CJC-1295 + Ipamorelin adalah kombinasi peptida yang merangsang produksi hormon pertumbuhan alami. Membantu meningkatkan massa otot, pemulihan, dan kualitas tidur.';
+                }
+
+                if (lowerMessage.includes('ghk-cu') || lowerMessage.includes('anti-aging') || lowerMessage.includes('kulit')) {
+                    return 'GHK-Cu adalah peptida perbaikan jaringan dan anti-penuaan yang mendukung regenerasi kulit, penyembuhan luka, dan kesehatan seluler. Baik untuk kesehatan kulit dan vitalitas.';
+                }
+
+                if (lowerMessage.includes('semax') || lowerMessage.includes('cognitive') || lowerMessage.includes('otak')) {
+                    return 'Semax adalah peptida peningkat kognitif yang mendukung fungsi otak, memori, dan fokus. Membantu meningkatkan kinerja mental dan neuroproteksi.';
+                }
+
+                if (lowerMessage.includes('selank') || lowerMessage.includes('anxiety') || lowerMessage.includes('kecemasan')) {
+                    return 'Selank adalah peptida yang mengurangi kecemasan dan mendukung fungsi kognitif. Membantu mengelola stres dan meningkatkan ketenangan mental.';
+                }
+
+                if (lowerMessage.includes('mots-c') || lowerMessage.includes('metabolic activator')) {
+                    return 'MOTS-c adalah peptida pengaktif metabolik yang meningkatkan metabolisme energi, sensitivitas insulin, dan fungsi mitokondria. Baik untuk kesehatan metabolik.';
+                }
+
+                if (lowerMessage.includes('dsip') || lowerMessage.includes('sleep') || lowerMessage.includes('tidur')) {
+                    return 'DSIP adalah peptida yang meningkatkan kualitas tidur dan pemulihan. Membantu mengatur pola tidur dan mendukung pemulihan tubuh.';
+                }
+
+                if (lowerMessage.includes('hgh') || lowerMessage.includes('hormon pertumbuhan')) {
+                    return 'HGH 191AA adalah hormon pertumbuhan manusia rekombinan yang mendukung pertumbuhan otot, kekuatan tulang, dan vitalitas keseluruhan.';
+                }
+
+                if (lowerMessage.includes('kisspeptin') || lowerMessage.includes('hormone regulation')) {
+                    return 'Kisspeptin adalah peptida pengatur hormon yang mendukung regulasi hormon alami dan fungsi endokrin.';
+                }
+
+                if (lowerMessage.includes('dosis') || lowerMessage.includes('dose') || lowerMessage.includes('penggunaan')) {
+                    return 'Dosis peptida bervariasi tergantung jenisnya. Untuk saran dosis yang tepat, konsultasikan dengan ahli kesehatan atau dokter. Kami merekomendasikan memulai dengan dosis terendah dan berkonsultasi dengan profesional medis.';
+                }
+
+                if (lowerMessage.includes('efek samping') || lowerMessage.includes('side effects') || lowerMessage.includes('aman')) {
+                    return 'Peptida kami diproduksi dengan standar kualitas tinggi dan diuji laboratorium. Namun, seperti suplemen lainnya, beberapa orang mungkin mengalami efek samping ringan. Selalu konsultasikan dengan dokter sebelum penggunaan.';
+                }
+
+                if (lowerMessage.includes('penyimpanan') || lowerMessage.includes('storage') || lowerMessage.includes('simpan')) {
+                    return 'Simpan peptida di tempat sejuk dan kering, jauh dari sinar matahari langsung. Beberapa peptida mungkin memerlukan refrigerasi. Ikuti instruksi penyimpanan spesifik untuk setiap produk.';
+                }
+
+                if (lowerMessage.includes('harga') || lowerMessage.includes('price') || lowerMessage.includes('biaya')) {
+                    return 'Harga peptida kami bervariasi tergantung jenis dan jumlah. Kunjungi halaman produk kami untuk informasi harga terkini. Kami menawarkan pengiriman gratis untuk pesanan tertentu.';
+                }
+
+                if (lowerMessage.includes('pesan') || lowerMessage.includes('order') || lowerMessage.includes('beli')) {
+                    return 'Untuk memesan, tambahkan produk ke keranjang dan ikuti proses checkout. Kami akan menghubungi Anda melalui WhatsApp untuk konfirmasi pengiriman. Pengiriman dilakukan secara aman dan terpercaya.';
+                }
+
+                // General health questions
+                if (lowerMessage.includes('kesehatan') || lowerMessage.includes('health') || lowerMessage.includes('tubuh') || lowerMessage.includes('body')) {
+                    return 'Kesehatan tubuh adalah prioritas utama. Peptida kami dirancang untuk mendukung berbagai aspek kesehatan seperti metabolisme, kognitif, pemulihan, dan anti-penuaan. Apa aspek kesehatan spesifik yang ingin Anda ketahui?';
+                }
+
+                return 'Maaf, saya sedang mengalami gangguan teknis dengan sistem AI. Silakan coba lagi nanti atau hubungi kami langsung melalui WhatsApp untuk bantuan segera. Kami siap membantu Anda dengan informasi tentang produk peptide kami!';
             }
         }
 
