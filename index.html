@@ -2174,150 +2174,105 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        async function getBotResponse(message) {
-            try {
-                // Show typing indicator
-                addTypingIndicator();
+        function getBotResponse(message) {
+            // Show typing indicator
+            addTypingIndicator();
 
-                // Get API key from environment or configuration
-                // IMPORTANT: Replace 'YOUR_OPENAI_API_KEY_HERE' with your actual OpenAI API key
-                const apiKey = 'YOUR_OPENAI_API_KEY_HERE';
-
-                if (apiKey === 'YOUR_OPENAI_API_KEY_HERE' || !apiKey) {
-                    throw new Error('OpenAI API key not configured. Please replace YOUR_OPENAI_API_KEY_HERE with your actual API key.');
-                }
-
-                const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${apiKey}`
-                    },
-                    body: JSON.stringify({
-                        model: 'gpt-3.5-turbo',
-                        messages: [
-                            {
-                                role: 'system',
-                                content: `Anda adalah asisten konsultasi peptide profesional untuk JOESTAR PEPTIDE. Anda membantu pelanggan dengan pertanyaan tentang peptide, kesehatan tubuh, dan produk kami.
-
-INFORMASI PRODUK KAMI:
-- Retatrutide 10mg: Peptida metabolik canggih untuk optimasi metabolisme, pembakaran lemak, sensitivitas insulin
-- CJC-1295 + Ipamorelin: Kombinasi untuk hormon pertumbuhan, massa otot, pemulihan, tidur
-- GHK-Cu: Anti-penuaan, regenerasi kulit, perbaikan jaringan
-- Semax: Peningkat kognitif, fungsi otak, memori, fokus
-- Selank: Mengurangi kecemasan, mendukung fungsi kognitif
-- MOTS-c: Pengaktif metabolik, sensitivitas insulin, fungsi mitokondria
-- DSIP: Kualitas tidur, pemulihan, regulasi tidur
-- HGH 191AA: Hormon pertumbuhan rekombinan, pertumbuhan otot, kekuatan tulang
-- Kisspeptin: Pengatur hormon, fungsi endokrin
-
-KEBIJAKAN:
-- Semua peptida 99%+ kemurnian, diuji lab
-- Konsultasi dokter sebelum penggunaan
-- Pengiriman aman via WhatsApp
-- Harga kompetitif, pengiriman gratis untuk pesanan besar
-
-JAWAB DALAM BAHASA INDONESIA dengan ramah, profesional, dan informatif. Jika pertanyaan di luar topik peptide/kesehatan, arahkan kembali ke topik tersebut.`
-                            },
-                            {
-                                role: 'user',
-                                content: message
-                            }
-                        ],
-                        max_tokens: 500,
-                        temperature: 0.7
-                    })
-                });
-
-                // Remove typing indicator
+            // Simulate processing delay
+            setTimeout(() => {
                 removeTypingIndicator();
 
-                if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({}));
-                    throw new Error(`API Error: ${response.status} - ${errorData.error?.message || 'Unknown error'}`);
-                }
-
-                const data = await response.json();
-                return data.choices[0].message.content.trim();
-
-            } catch (error) {
-                console.error('Chatbot API error:', error);
-                removeTypingIndicator();
-
-                // Enhanced fallback responses
+                // Enhanced intelligent responses based on keywords
                 const lowerMessage = message.toLowerCase();
 
-                if (lowerMessage.includes('halo') || lowerMessage.includes('hi') || lowerMessage.includes('hello')) {
+                // Greeting responses
+                if (lowerMessage.includes('halo') || lowerMessage.includes('hi') || lowerMessage.includes('hello') || lowerMessage.includes('hai')) {
                     return 'Halo! Selamat datang di konsultasi peptide JOESTAR. Saya siap membantu Anda dengan pertanyaan tentang kesehatan tubuh dan produk peptide kami. Apa yang ingin Anda ketahui?';
                 }
 
-                if (lowerMessage.includes('terima kasih') || lowerMessage.includes('thanks')) {
+                // Gratitude responses
+                if (lowerMessage.includes('terima kasih') || lowerMessage.includes('thanks') || lowerMessage.includes('makasih')) {
                     return 'Sama-sama! Jika Anda memiliki pertanyaan lain tentang peptide atau kesehatan tubuh, jangan ragu untuk bertanya. Semoga informasi ini bermanfaat!';
                 }
 
-                if (lowerMessage.includes('retatrutide') || lowerMessage.includes('metabolic')) {
-                    return 'Retatrutide adalah peptida metabolik canggih yang membantu mengoptimalkan metabolisme tubuh, meningkatkan pembakaran lemak, dan meningkatkan sensitivitas insulin. Cocok untuk manajemen berat badan dan optimasi energi.';
+                // Product-specific responses
+                if (lowerMessage.includes('retatrutide') || lowerMessage.includes('metabolik') || lowerMessage.includes('metabolic')) {
+                    return 'Retatrutide adalah peptida metabolik canggih yang membantu mengoptimalkan metabolisme tubuh, meningkatkan pembakaran lemak, dan meningkatkan sensitivitas insulin. Cocok untuk manajemen berat badan dan optimasi energi. Harga: 1.5 JT per vial.';
                 }
 
-                if (lowerMessage.includes('cjc-1295') || lowerMessage.includes('ipamorelin') || lowerMessage.includes('growth hormone')) {
-                    return 'CJC-1295 + Ipamorelin adalah kombinasi peptida yang merangsang produksi hormon pertumbuhan alami. Membantu meningkatkan massa otot, pemulihan, dan kualitas tidur.';
+                if (lowerMessage.includes('cjc-1295') || lowerMessage.includes('ipamorelin') || lowerMessage.includes('growth hormone') || lowerMessage.includes('hormon pertumbuhan')) {
+                    return 'CJC-1295 + Ipamorelin adalah kombinasi peptida yang merangsang produksi hormon pertumbuhan alami. Membantu meningkatkan massa otot, pemulihan, dan kualitas tidur. Harga: 2.0 JT per vial.';
                 }
 
-                if (lowerMessage.includes('ghk-cu') || lowerMessage.includes('anti-aging') || lowerMessage.includes('kulit')) {
-                    return 'GHK-Cu adalah peptida perbaikan jaringan dan anti-penuaan yang mendukung regenerasi kulit, penyembuhan luka, dan kesehatan seluler. Baik untuk kesehatan kulit dan vitalitas.';
+                if (lowerMessage.includes('ghk-cu') || lowerMessage.includes('anti-aging') || lowerMessage.includes('anti penuaan') || lowerMessage.includes('kulit')) {
+                    return 'GHK-Cu adalah peptida perbaikan jaringan dan anti-penuaan yang mendukung regenerasi kulit, penyembuhan luka, dan kesehatan seluler. Baik untuk kesehatan kulit dan vitalitas. Harga: 1.8 JT per vial.';
                 }
 
-                if (lowerMessage.includes('semax') || lowerMessage.includes('cognitive') || lowerMessage.includes('otak')) {
-                    return 'Semax adalah peptida peningkat kognitif yang mendukung fungsi otak, memori, dan fokus. Membantu meningkatkan kinerja mental dan neuroproteksi.';
+                if (lowerMessage.includes('semax') || lowerMessage.includes('cognitive') || lowerMessage.includes('kognitif') || lowerMessage.includes('otak')) {
+                    return 'Semax adalah peptida peningkat kognitif yang mendukung fungsi otak, memori, dan fokus. Membantu meningkatkan kinerja mental dan neuroproteksi. Harga: 1.2 JT per vial.';
                 }
 
-                if (lowerMessage.includes('selank') || lowerMessage.includes('anxiety') || lowerMessage.includes('kecemasan')) {
-                    return 'Selank adalah peptida yang mengurangi kecemasan dan mendukung fungsi kognitif. Membantu mengelola stres dan meningkatkan ketenangan mental.';
+                if (lowerMessage.includes('selank') || lowerMessage.includes('anxiety') || lowerMessage.includes('kecemasan') || lowerMessage.includes('stress')) {
+                    return 'Selank adalah peptida yang mengurangi kecemasan dan mendukung fungsi kognitif. Membantu mengelola stres dan meningkatkan ketenangan mental. Harga: 1.0 JT per vial.';
                 }
 
-                if (lowerMessage.includes('mots-c') || lowerMessage.includes('metabolic activator')) {
-                    return 'MOTS-c adalah peptida pengaktif metabolik yang meningkatkan metabolisme energi, sensitivitas insulin, dan fungsi mitokondria. Baik untuk kesehatan metabolik.';
+                if (lowerMessage.includes('mots-c') || lowerMessage.includes('metabolic activator') || lowerMessage.includes('pengaktif metabolik')) {
+                    return 'MOTS-c adalah peptida pengaktif metabolik yang meningkatkan metabolisme energi, sensitivitas insulin, dan fungsi mitokondria. Baik untuk kesehatan metabolik. Harga: 1.3 JT per vial.';
                 }
 
                 if (lowerMessage.includes('dsip') || lowerMessage.includes('sleep') || lowerMessage.includes('tidur')) {
-                    return 'DSIP adalah peptida yang meningkatkan kualitas tidur dan pemulihan. Membantu mengatur pola tidur dan mendukung pemulihan tubuh.';
+                    return 'DSIP adalah peptida yang meningkatkan kualitas tidur dan pemulihan. Membantu mengatur pola tidur dan mendukung pemulihan tubuh. Harga: 1.1 JT per vial.';
                 }
 
-                if (lowerMessage.includes('hgh') || lowerMessage.includes('hormon pertumbuhan')) {
-                    return 'HGH 191AA adalah hormon pertumbuhan manusia rekombinan yang mendukung pertumbuhan otot, kekuatan tulang, dan vitalitas keseluruhan.';
+                if (lowerMessage.includes('hgh') || lowerMessage.includes('191aa')) {
+                    return 'HGH 191AA adalah hormon pertumbuhan manusia rekombinan yang mendukung pertumbuhan otot, kekuatan tulang, dan vitalitas keseluruhan. Harga: 3.0 JT per vial.';
                 }
 
-                if (lowerMessage.includes('kisspeptin') || lowerMessage.includes('hormone regulation')) {
-                    return 'Kisspeptin adalah peptida pengatur hormon yang mendukung regulasi hormon alami dan fungsi endokrin.';
+                if (lowerMessage.includes('kisspeptin') || lowerMessage.includes('hormone regulation') || lowerMessage.includes('pengatur hormon')) {
+                    return 'Kisspeptin adalah peptida pengatur hormon yang mendukung regulasi hormon alami dan fungsi endokrin. Harga: 1.6 JT per vial.';
                 }
 
-                if (lowerMessage.includes('dosis') || lowerMessage.includes('dose') || lowerMessage.includes('penggunaan')) {
-                    return 'Dosis peptida bervariasi tergantung jenisnya. Untuk saran dosis yang tepat, konsultasikan dengan ahli kesehatan atau dokter. Kami merekomendasikan memulai dengan dosis terendah dan berkonsultasi dengan profesional medis.';
+                // General questions
+                if (lowerMessage.includes('apa itu peptida') || lowerMessage.includes('peptida apa') || lowerMessage.includes('tentang peptida')) {
+                    return 'Peptida adalah rantai pendek asam amino yang bertindak sebagai molekul pensinyalan dalam tubuh. Mereka membantu mengatur berbagai proses biologis seperti regulasi hormon, fungsi kekebalan, dan perbaikan jaringan. Peptida kami diproduksi dengan kemurnian 99%+ dan diuji laboratorium.';
                 }
 
-                if (lowerMessage.includes('efek samping') || lowerMessage.includes('side effects') || lowerMessage.includes('aman')) {
-                    return 'Peptida kami diproduksi dengan standar kualitas tinggi dan diuji laboratorium. Namun, seperti suplemen lainnya, beberapa orang mungkin mengalami efek samping ringan. Selalu konsultasikan dengan dokter sebelum penggunaan.';
+                if (lowerMessage.includes('dosis') || lowerMessage.includes('dose') || lowerMessage.includes('penggunaan') || lowerMessage.includes('cara pakai')) {
+                    return 'Dosis peptida bervariasi tergantung jenisnya. Untuk saran dosis yang tepat, konsultasikan dengan ahli kesehatan atau dokter. Kami merekomendasikan memulai dengan dosis terendah dan berkonsultasi dengan profesional medis. Semua produk dilengkapi panduan penggunaan.';
+                }
+
+                if (lowerMessage.includes('efek samping') || lowerMessage.includes('side effects') || lowerMessage.includes('aman') || lowerMessage.includes('bahaya')) {
+                    return 'Peptida kami diproduksi dengan standar kualitas tinggi dan diuji laboratorium. Namun, seperti suplemen lainnya, beberapa orang mungkin mengalami efek samping ringan. Selalu konsultasikan dengan dokter sebelum penggunaan, terutama jika Anda memiliki kondisi kesehatan tertentu.';
                 }
 
                 if (lowerMessage.includes('penyimpanan') || lowerMessage.includes('storage') || lowerMessage.includes('simpan')) {
-                    return 'Simpan peptida di tempat sejuk dan kering, jauh dari sinar matahari langsung. Beberapa peptida mungkin memerlukan refrigerasi. Ikuti instruksi penyimpanan spesifik untuk setiap produk.';
+                    return 'Simpan peptida di tempat sejuk dan kering, jauh dari sinar matahari langsung. Beberapa peptida mungkin memerlukan refrigerasi. Ikuti instruksi penyimpanan spesifik untuk setiap produk. Semua produk dikemas dalam kemasan steril vakum.';
                 }
 
-                if (lowerMessage.includes('harga') || lowerMessage.includes('price') || lowerMessage.includes('biaya')) {
-                    return 'Harga peptida kami bervariasi tergantung jenis dan jumlah. Kunjungi halaman produk kami untuk informasi harga terkini. Kami menawarkan pengiriman gratis untuk pesanan tertentu.';
+                if (lowerMessage.includes('harga') || lowerMessage.includes('price') || lowerMessage.includes('biaya') || lowerMessage.includes('berapa')) {
+                    return 'Harga peptida kami berkisar dari 1.0 JT hingga 3.0 JT tergantung jenis dan jumlah. Kami menawarkan pengiriman gratis untuk pesanan di atas 5.0 JT. Kunjungi halaman produk untuk informasi harga terkini dan diskon khusus.';
                 }
 
-                if (lowerMessage.includes('pesan') || lowerMessage.includes('order') || lowerMessage.includes('beli')) {
-                    return 'Untuk memesan, tambahkan produk ke keranjang dan ikuti proses checkout. Kami akan menghubungi Anda melalui WhatsApp untuk konfirmasi pengiriman. Pengiriman dilakukan secara aman dan terpercaya.';
+                if (lowerMessage.includes('pesan') || lowerMessage.includes('order') || lowerMessage.includes('beli') || lowerMessage.includes('checkout')) {
+                    return 'Untuk memesan, tambahkan produk ke keranjang dan ikuti proses checkout. Kami akan menghubungi Anda melalui WhatsApp untuk konfirmasi pengiriman. Pengiriman dilakukan secara aman dan terpercaya ke seluruh Indonesia dan internasional.';
+                }
+
+                if (lowerMessage.includes('pengiriman') || lowerMessage.includes('shipping') || lowerMessage.includes('kirim')) {
+                    return 'Kami menyediakan pengiriman aman ke seluruh Indonesia dan internasional. Pengiriman gratis untuk pesanan di atas 5.0 JT. Paket dikemas dengan hati-hati dan dilacak hingga tujuan. Estimasi pengiriman 2-7 hari kerja.';
+                }
+
+                if (lowerMessage.includes('kualitas') || lowerMessage.includes('quality') || lowerMessage.includes('kemurnian')) {
+                    return 'Semua peptida kami memiliki kemurnian 99%+ dan diuji oleh laboratorium independen. Kami menggunakan teknologi sintesis peptida canggih dan standar GMP. Setiap batch memiliki sertifikat analisis dan dapat dilacak.';
                 }
 
                 // General health questions
                 if (lowerMessage.includes('kesehatan') || lowerMessage.includes('health') || lowerMessage.includes('tubuh') || lowerMessage.includes('body')) {
-                    return 'Kesehatan tubuh adalah prioritas utama. Peptida kami dirancang untuk mendukung berbagai aspek kesehatan seperti metabolisme, kognitif, pemulihan, dan anti-penuaan. Apa aspek kesehatan spesifik yang ingin Anda ketahui?';
+                    return 'Kesehatan tubuh adalah prioritas utama kami. Peptida JOESTAR dirancang untuk mendukung berbagai aspek kesehatan seperti metabolisme, kognitif, pemulihan, dan anti-penuaan. Apa aspek kesehatan spesifik yang ingin Anda ketahui?';
                 }
 
-                return 'Maaf, saya sedang mengalami gangguan teknis dengan sistem AI. Silakan coba lagi nanti atau hubungi kami langsung melalui WhatsApp untuk bantuan segera. Kami siap membantu Anda dengan informasi tentang produk peptide kami!';
-            }
+                // Default response
+                return 'Terima kasih atas pertanyaan Anda! Saya siap membantu dengan informasi tentang produk peptide kami. Anda bisa bertanya tentang spesifik produk, harga, pengiriman, atau saran penggunaan. Apa yang ingin Anda ketahui lebih lanjut?';
+            }, 800); // 800ms delay for natural feel
         }
 
         function addTypingIndicator() {
