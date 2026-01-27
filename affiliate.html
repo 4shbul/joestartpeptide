@@ -389,7 +389,72 @@
         Back to Home
     </a>
 
-    <div class="affiliate-hero">
+    <!-- Affiliate Dashboard for Logged-in Users -->
+    <div id="affiliate-dashboard" class="affiliate-hero" style="display: none;">
+        <div class="hero-icon">
+            <i class="fas fa-trophy"></i>
+        </div>
+        <h1 class="hero-title">Your Affiliate Dashboard</h1>
+        <p class="hero-subtitle">Track your referrals, commissions, and earnings in real-time</p>
+
+        <div class="dashboard-stats">
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+                <div class="card-content">
+                    <div class="card-value" id="total-commission">Rp 0</div>
+                    <div class="card-label">Total Commission</div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="card-content">
+                    <div class="card-value" id="total-referrals">0</div>
+                    <div class="card-label">Total Referrals</div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <div class="card-content">
+                    <div class="card-value" id="available-balance">Rp 0</div>
+                    <div class="card-label">Available Balance</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="referral-code-section">
+            <h3>Your Referral Code</h3>
+            <div class="code-display">
+                <code id="referral-code">Loading...</code>
+                <button class="copy-btn" onclick="copyReferralCode()">
+                    <i class="fas fa-copy"></i>
+                    Copy
+                </button>
+            </div>
+            <p class="code-info">Share this code with friends or use it in your referral links</p>
+        </div>
+
+        <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 32px;">
+            <button class="btn-primary" onclick="generateReferralLink()">
+                <i class="fas fa-link"></i>
+                Generate Referral Link
+            </button>
+            <button class="btn-secondary" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                Logout
+            </button>
+        </div>
+    </div>
+
+    <!-- Landing Page for Non-Logged-in Users -->
+    <div id="affiliate-landing" class="affiliate-hero">
         <div class="hero-icon">
             <i class="fas fa-handshake"></i>
         </div>
