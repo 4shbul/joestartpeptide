@@ -349,8 +349,8 @@ app.post('/api/affiliate/track', (req, res) => {
         return res.status(404).json({ message: 'Invalid affiliate code' });
     }
 
-    // Calculate commission (10% of order amount)
-    const commission = orderAmount * 0.1;
+    // Calculate commission (4% of order amount)
+    const commission = orderAmount * 0.04;
 
     // Add referral
     if (!affiliateUser.affiliate.referrals) {

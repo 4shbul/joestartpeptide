@@ -212,6 +212,95 @@
             margin: 8px 0 0;
         }
 
+        .affiliate-section {
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0.05), rgba(236, 72, 153, 0.05));
+            border: 1px solid rgba(220, 38, 38, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin: 24px 0;
+            text-align: center;
+        }
+
+        .affiliate-section h3 {
+            color: #dc2626;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .affiliate-section p {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .affiliate-btn {
+            background: linear-gradient(135deg, #dc2626, #ec4899);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 20px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .affiliate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .affiliate-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid rgba(229, 231, 235, 0.5);
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 800;
+            color: #dc2626;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .affiliate-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: linear-gradient(135deg, #dc2626, #ec4899);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+
         .divider {
             text-align: center;
             margin: 32px 0;
@@ -365,6 +454,32 @@
                 Sign In
             </button>
         </form>
+
+        <div class="affiliate-section">
+            <div class="affiliate-badge">
+                <i class="fas fa-crown"></i>
+            </div>
+            <h3><i class="fas fa-handshake mr-2"></i>Affiliate Program</h3>
+            <p>Join our affiliate program and earn commissions by referring customers!</p>
+            <button class="affiliate-btn" onclick="window.location.href='#affiliate'">
+                <i class="fas fa-chart-line"></i>
+                View Dashboard
+            </button>
+            <div class="affiliate-stats">
+                <div class="stat-item">
+                    <div class="stat-number">5%</div>
+                    <div class="stat-label">Commission</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Referrals</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Support</div>
+                </div>
+            </div>
+        </div>
 
         <div class="divider">
             <span>or continue with</span>
