@@ -312,6 +312,30 @@
             box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
         }
 
+        .affiliate-btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #dc2626;
+            border: 2px solid rgba(220, 38, 38, 0.3);
+            border-radius: 16px;
+            padding: 14px 16px;
+            font-weight: 700;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.1);
+        }
+
+        .affiliate-btn-secondary:hover {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(220, 38, 38, 0.2);
+        }
+
         .affiliate-stats {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -526,12 +550,29 @@
             <div class="affiliate-badge">
                 <i class="fas fa-crown"></i>
             </div>
-            <h3><i class="fas fa-handshake mr-2"></i>Affiliate Program</h3>
-            <p>Join our affiliate program and earn commissions by referring customers!</p>
-            <button class="affiliate-btn" onclick="window.location.href='affiliate.html'">
-                <i class="fas fa-external-link-alt"></i>
-                Learn More
-            </button>
+            <h3><i class="fas fa-handshake mr-2"></i>Join Affiliate Program</h3>
+            <p class="mb-4">Earn <strong>5% commission</strong> on every referral! Start making money by sharing JOESTAR PEPTIDE with others.</p>
+
+            <div class="affiliate-highlight">
+                <div class="highlight-text">
+                    <i class="fas fa-gift mr-2"></i>
+                    Special Bonus: Get 10% off your next purchase when you join!
+                </div>
+                <div class="highlight-subtext">
+                    Limited time offer for new affiliates
+                </div>
+            </div>
+
+            <div class="flex gap-3 mb-6">
+                <button class="affiliate-btn flex-1" onclick="window.location.href='affiliate.html'">
+                    <i class="fas fa-rocket mr-2"></i>
+                    Join Now - Earn 5%
+                </button>
+                <button class="affiliate-btn-secondary" onclick="window.location.href='affiliate.html'">
+                    <i class="fas fa-info-circle"></i>
+                </button>
+            </div>
+
             <div class="affiliate-stats">
                 <div class="stat-item">
                     <div class="stat-number">5%</div>
