@@ -447,6 +447,21 @@
                 >
             </div>
 
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-2">Referral Code (Optional)</label>
+                <i class="fas fa-gift input-icon"></i>
+                <input
+                    type="text"
+                    id="referral-code"
+                    class="input-field"
+                    placeholder="Enter referral code for bonus"
+                >
+                <div class="text-xs text-gray-500 mt-1">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    Optional: Enter a referral code to get special bonuses and help others earn commissions
+                </div>
+            </div>
+
             <div class="flex items-center mb-4">
                 <input type="checkbox" id="terms" class="mr-2" required>
                 <label for="terms" class="text-sm text-gray-600">
@@ -597,6 +612,7 @@
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
+            const referralCode = document.getElementById('referral-code').value.trim();
 
             // Client-side validation
             if (password !== confirmPassword) {
@@ -614,9 +630,14 @@
             }
 
             try {
+                const registrationData = { name, email, password };
+                if (referralCode) {
+                    registrationData.referralCode = referralCode;
+                }
+
                 const data = await apiRequest('/auth/register', {
                     method: 'POST',
-                    body: JSON.stringify({ name, email, password })
+                    body: JSON.stringify(registrationData)
                 });
 
                 // Store token

@@ -1,0 +1,35 @@
+[
+  {
+    "id": "WELCOME10",
+    "code": "WELCOME10",
+    "discount": 10,
+    "type": "percentage",
+    "maxUses": 100,
+    "usedCount": 0,
+    "validUntil": "2024-12-31",
+    "active": true,
+    "description": "Welcome discount for new customers"
+  },
+  {
+    "id": "JOESTAR20",
+    "code": "JOESTAR20",
+    "discount": 20,
+    "type": "percentage",
+    "maxUses": 50,
+    "usedCount": 0,
+    "validUntil": "2024-12-31",
+    "active": true,
+    "description": "Special JOESTAR discount"
+  },
+  {
+    "id": "PEPTIDE50K",
+    "code": "PEPTIDE50K",
+    "discount": 50000,
+    "type": "fixed",
+    "maxUses": 25,
+    "usedCount": 0,
+    "validUntil": "2024-12-31",
+    "active": true,
+    "description": "Fixed discount for peptide orders"
+  }
+]

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "name": "Ahmad Rahman",
+    "location": "Jakarta",
+    "rating": 5,
+    "text": "Produk peptide JOESTAR sangat berkualitas! Sudah 3 bulan pakai dan merasakan perubahan yang signifikan dalam energi dan pemulihan tubuh.",
+    "product": "CJC-1295 + Ipamorelin",
+    "date": "2024-01-15",
+    "verified": true
+  },
+  {
+    "id": "2",
+    "name": "Sari Dewi",
+    "location": "Surabaya",
+    "rating": 5,
+    "text": "Pelayanan sangat profesional dan produk asli. Chatbot konsultasi sangat membantu untuk memahami produk yang tepat untuk kebutuhan saya.",
+    "product": "GHK-Cu",
+    "date": "2024-01-20",
+    "verified": true
+  },
+  {
+    "id": "3",
+    "name": "Budi Santoso",
+    "location": "Bandung",
+    "rating": 5,
+    "text": "Harga terjangkau dengan kualitas premium. Pengiriman cepat dan aman. Recommended!",
+    "product": "Retatrutide 10mg",
+    "date": "2024-01-25",
+    "verified": true
+  }
+]

@@ -1,0 +1,59 @@
+[
+  {
+    "id": "1",
+    "title": "Panduan Lengkap Peptide untuk Kesehatan Optimal",
+    "description": "Buku elektronik komprehensif tentang dunia peptide, manfaatnya, dan cara penggunaan yang tepat untuk kesehatan tubuh Anda.",
+    "pages": 85,
+    "language": "Indonesia",
+    "downloadUrl": "/ebooks/panduan-peptide-kesehatan.pdf",
+    "previewUrl": "/ebooks/preview/panduan-peptide-kesehatan-preview.pdf",
+    "thumbnail": "/images/ebook-peptide-guide.jpg",
+    "category": "Education",
+    "tags": [
+      "peptide",
+      "kesehatan",
+      "panduan",
+      "edukasi"
+    ],
+    "downloads": 0,
+    "featured": true
+  },
+  {
+    "id": "2",
+    "title": "Optimasi Hormon dengan Peptide Therapy",
+    "description": "Pelajari bagaimana peptide dapat membantu mengoptimalkan kadar hormon alami tubuh untuk performa maksimal.",
+    "pages": 67,
+    "language": "Indonesia",
+    "downloadUrl": "/ebooks/optimasi-hormon-peptide.pdf",
+    "previewUrl": "/ebooks/preview/optimasi-hormon-peptide-preview.pdf",
+    "thumbnail": "/images/ebook-hormone-optimization.jpg",
+    "category": "Health",
+    "tags": [
+      "hormon",
+      "peptide",
+      "optimasi",
+      "performa"
+    ],
+    "downloads": 0,
+    "featured": false
+  },
+  {
+    "id": "3",
+    "title": "Anti-Aging dengan Teknologi Peptide Modern",
+    "description": "Temukan rahasia anti-aging dengan peptide terdepan untuk kulit yang lebih muda dan vitalitas yang optimal.",
+    "pages": 92,
+    "language": "Indonesia",
+    "downloadUrl": "/ebooks/anti-aging-peptide.pdf",
+    "previewUrl": "/ebooks/preview/anti-aging-peptide-preview.pdf",
+    "thumbnail": "/images/ebook-anti-aging.jpg",
+    "category": "Beauty",
+    "tags": [
+      "anti-aging",
+      "kulit",
+      "peptide",
+      "vitalitas"
+    ],
+    "downloads": 0,
+    "featured": true
+  }
+]

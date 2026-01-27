@@ -12,5 +12,12 @@
     "email": "ashabulkhaer@gmail.com",
     "password": "$2a$10$FOk4Z0KB9qe5HFhwkQ.z0OV/Bw3dry6QYM.56g6KAcfZ5NBDHF5tW",
     "createdAt": "2026-01-25T17:39:23.916Z"
+  },
+  {
+    "id": "1769514464202",
+    "name": "Test User",
+    "email": "test@example.com",
+    "password": "$2a$10$a3tobzWrOqs0xFG50RPkCelKPqaM.24SLho1GwLwRSY5Me6Ew3mcu",
+    "createdAt": "2026-01-27T11:47:44.202Z"
   }
 ]

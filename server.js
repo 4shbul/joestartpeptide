@@ -41,7 +41,7 @@ if (!fs.existsSync(USERS_FILE)) {
 // Register new user
 app.post('/api/auth/register', async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        const { name, email, password, referralCode } = req.body;
 
         if (!name || !email || !password) {
             return res.status(400).json({ message: 'All fields are required' });
@@ -64,6 +64,40 @@ app.post('/api/auth/register', async (req, res) => {
             password: hashedPassword,
             createdAt: new Date().toISOString()
         };
+
+        // Handle referral code if provided
+        if (referralCode) {
+            const referrer = users.find(user => user.affiliate && user.affiliate.code === referralCode);
+            if (referrer) {
+                // Initialize affiliate data for referrer if not exists
+                if (!referrer.affiliate) {
+                    referrer.affiliate = {
+                        code: `JOESTAR${referrer.id.slice(-4).toUpperCase()}`,
+                        referrals: [],
+                        commission: 0,
+                        totalEarned: 0,
+                        level: 'Bronze'
+                    };
+                }
+
+                // Add referral to referrer's data
+                if (!referrer.affiliate.referrals) {
+                    referrer.affiliate.referrals = [];
+                }
+
+                referrer.affiliate.referrals.push({
+                    id: newUser.id,
+                    name: newUser.name,
+                    email: newUser.email,
+                    date: new Date().toISOString(),
+                    status: 'registered'
+                });
+
+                // Note: Commission will be added when the referred user makes a purchase
+                // This is tracked via the /api/affiliate/track endpoint
+            }
+            // If referral code is invalid, we still allow registration but don't track it
+        }
 
         users.push(newUser);
         writeUsers(users);
