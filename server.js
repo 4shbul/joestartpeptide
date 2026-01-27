@@ -67,12 +67,12 @@ app.post('/api/auth/register', async (req, res) => {
 
         // Handle referral code if provided
         if (referralCode) {
-            const referrer = users.find(user => user.affiliate && user.affiliate.code === referralCode);
+            const referrer = users.find(user => user.affiliate && user.affiliate.redeemCode === referralCode);
             if (referrer) {
                 // Initialize affiliate data for referrer if not exists
                 if (!referrer.affiliate) {
                     referrer.affiliate = {
-                        code: `JOESTAR${referrer.id.slice(-4).toUpperCase()}`,
+                        redeemCode: `JOESTAR${referrer.id.slice(-4).toUpperCase()}`,
                         referrals: [],
                         commission: 0,
                         totalEarned: 0,
@@ -291,7 +291,7 @@ app.get('/api/affiliate/dashboard', authenticateToken, (req, res) => {
     // Initialize affiliate data if not exists
     if (!user.affiliate) {
         user.affiliate = {
-            code: `JOESTAR${user.id.slice(-4).toUpperCase()}`,
+            redeemCode: `JOESTAR${user.id.slice(-4).toUpperCase()}`,
             referrals: [],
             commission: 0,
             totalEarned: 0,
@@ -302,11 +302,11 @@ app.get('/api/affiliate/dashboard', authenticateToken, (req, res) => {
 
     res.json({
         affiliate: user.affiliate,
-        referralLink: `https://joestarpeptide.com?ref=${user.affiliate.code}`
+        referralLink: `https://joestarpeptide.com?ref=${user.affiliate.redeemCode}`
     });
 });
 
-// Generate affiliate code
+// Generate affiliate redeem code
 app.post('/api/affiliate/generate-code', authenticateToken, (req, res) => {
     const users = readUsers();
     const userIndex = users.findIndex(u => u.id === req.user.userId);
@@ -316,25 +316,45 @@ app.post('/api/affiliate/generate-code', authenticateToken, (req, res) => {
     }
 
     if (!users[userIndex].affiliate) {
+        const redeemCode = `JOESTAR${users[userIndex].id.slice(-4).toUpperCase()}`;
         users[userIndex].affiliate = {
-            code: `JOESTAR${users[userIndex].id.slice(-4).toUpperCase()}`,
+            redeemCode: redeemCode,
             referrals: [],
             commission: 0,
             totalEarned: 0,
             level: 'Bronze'
         };
+
+        // Generate a discount code for the affiliate
+        const discountCodes = readDiscountCodes();
+        const existingCode = discountCodes.find(c => c.code === redeemCode);
+        if (!existingCode) {
+            const newDiscountCode = {
+                id: `AFFILIATE_${users[userIndex].id}`,
+                code: redeemCode,
+                discount: 20,
+                type: 'percentage',
+                maxUses: 1,
+                usedCount: 0,
+                validUntil: '2024-12-31',
+                active: true,
+                description: `Affiliate discount code for ${users[userIndex].name}`
+            };
+            discountCodes.push(newDiscountCode);
+            writeDiscountCodes(discountCodes);
+        }
     }
 
     writeUsers(users);
 
     res.json({
-        message: 'Affiliate code generated successfully',
+        message: 'Affiliate redeem code generated successfully',
         affiliate: users[userIndex].affiliate,
-        referralLink: `https://joestarpeptide.com?ref=${users[userIndex].affiliate.code}`
+        referralLink: `https://joestarpeptide.com?ref=${users[userIndex].affiliate.redeemCode}`
     });
 });
 
-// Track referral (when someone uses affiliate code)
+// Track referral (when someone uses affiliate redeem code)
 app.post('/api/affiliate/track', (req, res) => {
     const { affiliateCode, orderAmount } = req.body;
 
@@ -343,7 +363,7 @@ app.post('/api/affiliate/track', (req, res) => {
     }
 
     const users = readUsers();
-    const affiliateUser = users.find(u => u.affiliate && u.affiliate.code === affiliateCode);
+    const affiliateUser = users.find(u => u.affiliate && u.affiliate.redeemCode === affiliateCode);
 
     if (!affiliateUser) {
         return res.status(404).json({ message: 'Invalid affiliate code' });
