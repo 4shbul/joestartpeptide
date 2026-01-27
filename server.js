@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 const JWT_SECRET = 'joestar-peptide-secret-key-2023';
 
 // Middleware
@@ -242,6 +242,466 @@ app.put('/api/auth/change-password', authenticateToken, async (req, res) => {
         console.error('Password change error:', error);
         res.status(500).json({ message: 'Server error' });
     }
+});
+
+// Affiliate System
+// Get affiliate dashboard data
+app.get('/api/affiliate/dashboard', authenticateToken, (req, res) => {
+    const users = readUsers();
+    const user = users.find(u => u.id === req.user.userId);
+
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Initialize affiliate data if not exists
+    if (!user.affiliate) {
+        user.affiliate = {
+            code: `JOESTAR${user.id.slice(-4).toUpperCase()}`,
+            referrals: [],
+            commission: 0,
+            totalEarned: 0,
+            level: 'Bronze'
+        };
+        writeUsers(users);
+    }
+
+    res.json({
+        affiliate: user.affiliate,
+        referralLink: `https://joestarpeptide.com?ref=${user.affiliate.code}`
+    });
+});
+
+// Generate affiliate code
+app.post('/api/affiliate/generate-code', authenticateToken, (req, res) => {
+    const users = readUsers();
+    const userIndex = users.findIndex(u => u.id === req.user.userId);
+
+    if (userIndex === -1) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+
+    if (!users[userIndex].affiliate) {
+        users[userIndex].affiliate = {
+            code: `JOESTAR${users[userIndex].id.slice(-4).toUpperCase()}`,
+            referrals: [],
+            commission: 0,
+            totalEarned: 0,
+            level: 'Bronze'
+        };
+    }
+
+    writeUsers(users);
+
+    res.json({
+        message: 'Affiliate code generated successfully',
+        affiliate: users[userIndex].affiliate,
+        referralLink: `https://joestarpeptide.com?ref=${users[userIndex].affiliate.code}`
+    });
+});
+
+// Track referral (when someone uses affiliate code)
+app.post('/api/affiliate/track', (req, res) => {
+    const { affiliateCode, orderAmount } = req.body;
+
+    if (!affiliateCode || !orderAmount) {
+        return res.status(400).json({ message: 'Affiliate code and order amount are required' });
+    }
+
+    const users = readUsers();
+    const affiliateUser = users.find(u => u.affiliate && u.affiliate.code === affiliateCode);
+
+    if (!affiliateUser) {
+        return res.status(404).json({ message: 'Invalid affiliate code' });
+    }
+
+    // Calculate commission (10% of order amount)
+    const commission = orderAmount * 0.1;
+
+    // Add referral
+    if (!affiliateUser.affiliate.referrals) {
+        affiliateUser.affiliate.referrals = [];
+    }
+
+    affiliateUser.affiliate.referrals.push({
+        id: Date.now().toString(),
+        amount: orderAmount,
+        commission: commission,
+        date: new Date().toISOString()
+    });
+
+    affiliateUser.affiliate.commission += commission;
+    affiliateUser.affiliate.totalEarned += commission;
+
+    // Update affiliate level based on total earned
+    if (affiliateUser.affiliate.totalEarned >= 1000000) {
+        affiliateUser.affiliate.level = 'Diamond';
+    } else if (affiliateUser.affiliate.totalEarned >= 500000) {
+        affiliateUser.affiliate.level = 'Gold';
+    } else if (affiliateUser.affiliate.totalEarned >= 100000) {
+        affiliateUser.affiliate.level = 'Silver';
+    }
+
+    writeUsers(users);
+
+    res.json({
+        message: 'Referral tracked successfully',
+        commission: commission
+    });
+});
+
+// Discount Code System
+const DISCOUNT_CODES_FILE = path.join(__dirname, 'discount-codes.json');
+
+// Initialize discount codes file
+const initializeDiscountCodes = () => {
+    if (!fs.existsSync(DISCOUNT_CODES_FILE)) {
+        const defaultCodes = [
+            {
+                id: 'WELCOME10',
+                code: 'WELCOME10',
+                discount: 10,
+                type: 'percentage',
+                maxUses: 100,
+                usedCount: 0,
+                validUntil: '2024-12-31',
+                active: true,
+                description: 'Welcome discount for new customers'
+            },
+            {
+                id: 'JOESTAR20',
+                code: 'JOESTAR20',
+                discount: 20,
+                type: 'percentage',
+                maxUses: 50,
+                usedCount: 0,
+                validUntil: '2024-12-31',
+                active: true,
+                description: 'Special JOESTAR discount'
+            },
+            {
+                id: 'PEPTIDE50K',
+                code: 'PEPTIDE50K',
+                discount: 50000,
+                type: 'fixed',
+                maxUses: 25,
+                usedCount: 0,
+                validUntil: '2024-12-31',
+                active: true,
+                description: 'Fixed discount for peptide orders'
+            }
+        ];
+        fs.writeFileSync(DISCOUNT_CODES_FILE, JSON.stringify(defaultCodes, null, 2));
+    }
+};
+
+const readDiscountCodes = () => {
+    try {
+        const data = fs.readFileSync(DISCOUNT_CODES_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        return [];
+    }
+};
+
+const writeDiscountCodes = (codes) => {
+    fs.writeFileSync(DISCOUNT_CODES_FILE, JSON.stringify(codes, null, 2));
+};
+
+// Initialize discount codes
+initializeDiscountCodes();
+
+// Validate discount code
+app.post('/api/discount/validate', (req, res) => {
+    const { code, orderAmount } = req.body;
+
+    if (!code) {
+        return res.status(400).json({ message: 'Discount code is required' });
+    }
+
+    const codes = readDiscountCodes();
+    const discountCode = codes.find(c => c.code.toLowerCase() === code.toLowerCase() && c.active);
+
+    if (!discountCode) {
+        return res.status(404).json({ message: 'Invalid or expired discount code' });
+    }
+
+    // Check if code is still valid
+    if (new Date() > new Date(discountCode.validUntil)) {
+        return res.status(400).json({ message: 'Discount code has expired' });
+    }
+
+    // Check usage limit
+    if (discountCode.usedCount >= discountCode.maxUses) {
+        return res.status(400).json({ message: 'Discount code usage limit exceeded' });
+    }
+
+    // Calculate discount amount
+    let discountAmount = 0;
+    if (discountCode.type === 'percentage') {
+        discountAmount = (orderAmount * discountCode.discount) / 100;
+    } else if (discountCode.type === 'fixed') {
+        discountAmount = Math.min(discountCode.discount, orderAmount);
+    }
+
+    res.json({
+        valid: true,
+        code: discountCode.code,
+        discount: discountAmount,
+        type: discountCode.type,
+        description: discountCode.description,
+        finalAmount: orderAmount - discountAmount
+    });
+});
+
+// Apply discount code (mark as used)
+app.post('/api/discount/apply', (req, res) => {
+    const { code, orderAmount } = req.body;
+
+    if (!code) {
+        return res.status(400).json({ message: 'Discount code is required' });
+    }
+
+    const codes = readDiscountCodes();
+    const codeIndex = codes.findIndex(c => c.code.toLowerCase() === code.toLowerCase() && c.active);
+
+    if (codeIndex === -1) {
+        return res.status(404).json({ message: 'Invalid discount code' });
+    }
+
+    const discountCode = codes[codeIndex];
+
+    // Check if code is still valid
+    if (new Date() > new Date(discountCode.validUntil)) {
+        return res.status(400).json({ message: 'Discount code has expired' });
+    }
+
+    // Check usage limit
+    if (discountCode.usedCount >= discountCode.maxUses) {
+        return res.status(400).json({ message: 'Discount code usage limit exceeded' });
+    }
+
+    // Increment usage count
+    discountCode.usedCount += 1;
+    writeDiscountCodes(codes);
+
+    // Calculate discount amount
+    let discountAmount = 0;
+    if (discountCode.type === 'percentage') {
+        discountAmount = (orderAmount * discountCode.discount) / 100;
+    } else if (discountCode.type === 'fixed') {
+        discountAmount = Math.min(discountCode.discount, orderAmount);
+    }
+
+    res.json({
+        message: 'Discount code applied successfully',
+        code: discountCode.code,
+        discount: discountAmount,
+        type: discountCode.type,
+        finalAmount: orderAmount - discountAmount
+    });
+});
+
+// Testimonials System
+const TESTIMONIALS_FILE = path.join(__dirname, 'testimonials.json');
+
+// Initialize testimonials file
+const initializeTestimonials = () => {
+    if (!fs.existsSync(TESTIMONIALS_FILE)) {
+        const defaultTestimonials = [
+            {
+                id: '1',
+                name: 'Ahmad Rahman',
+                location: 'Jakarta',
+                rating: 5,
+                text: 'Produk peptide JOESTAR sangat berkualitas! Sudah 3 bulan pakai dan merasakan perubahan yang signifikan dalam energi dan pemulihan tubuh.',
+                product: 'CJC-1295 + Ipamorelin',
+                date: '2024-01-15',
+                verified: true
+            },
+            {
+                id: '2',
+                name: 'Sari Dewi',
+                location: 'Surabaya',
+                rating: 5,
+                text: 'Pelayanan sangat profesional dan produk asli. Chatbot konsultasi sangat membantu untuk memahami produk yang tepat untuk kebutuhan saya.',
+                product: 'GHK-Cu',
+                date: '2024-01-20',
+                verified: true
+            },
+            {
+                id: '3',
+                name: 'Budi Santoso',
+                location: 'Bandung',
+                rating: 5,
+                text: 'Harga terjangkau dengan kualitas premium. Pengiriman cepat dan aman. Recommended!',
+                product: 'Retatrutide 10mg',
+                date: '2024-01-25',
+                verified: true
+            }
+        ];
+        fs.writeFileSync(TESTIMONIALS_FILE, JSON.stringify(defaultTestimonials, null, 2));
+    }
+};
+
+const readTestimonials = () => {
+    try {
+        const data = fs.readFileSync(TESTIMONIALS_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        return [];
+    }
+};
+
+const writeTestimonials = (testimonials) => {
+    fs.writeFileSync(TESTIMONIALS_FILE, JSON.stringify(testimonials, null, 2));
+};
+
+// Initialize testimonials
+initializeTestimonials();
+
+// Get testimonials
+app.get('/api/testimonials', (req, res) => {
+    const testimonials = readTestimonials();
+    res.json(testimonials);
+});
+
+// Add testimonial (for authenticated users)
+app.post('/api/testimonials', authenticateToken, (req, res) => {
+    const { rating, text, product } = req.body;
+
+    if (!rating || !text || !product) {
+        return res.status(400).json({ message: 'Rating, text, and product are required' });
+    }
+
+    if (rating < 1 || rating > 5) {
+        return res.status(400).json({ message: 'Rating must be between 1 and 5' });
+    }
+
+    const users = readUsers();
+    const user = users.find(u => u.id === req.user.userId);
+
+    if (!user) {
+        return res.status(404).json({ message: 'User not found' });
+    }
+
+    const testimonials = readTestimonials();
+
+    const newTestimonial = {
+        id: Date.now().toString(),
+        name: user.name,
+        location: 'Indonesia', // Default location
+        rating: parseInt(rating),
+        text: text,
+        product: product,
+        date: new Date().toISOString().split('T')[0],
+        verified: true,
+        userId: user.id
+    };
+
+    testimonials.push(newTestimonial);
+    writeTestimonials(testimonials);
+
+    res.status(201).json({
+        message: 'Testimonial added successfully',
+        testimonial: newTestimonial
+    });
+});
+
+// E-book System
+const EBOOKS_FILE = path.join(__dirname, 'ebooks.json');
+
+// Initialize ebooks file
+const initializeEbooks = () => {
+    if (!fs.existsSync(EBOOKS_FILE)) {
+        const defaultEbooks = [
+            {
+                id: '1',
+                title: 'Panduan Lengkap Peptide untuk Kesehatan Optimal',
+                description: 'Buku elektronik komprehensif tentang dunia peptide, manfaatnya, dan cara penggunaan yang tepat untuk kesehatan tubuh Anda.',
+                pages: 85,
+                language: 'Indonesia',
+                downloadUrl: '/ebooks/panduan-peptide-kesehatan.pdf',
+                previewUrl: '/ebooks/preview/panduan-peptide-kesehatan-preview.pdf',
+                thumbnail: '/images/ebook-peptide-guide.jpg',
+                category: 'Education',
+                tags: ['peptide', 'kesehatan', 'panduan', 'edukasi'],
+                downloads: 0,
+                featured: true
+            },
+            {
+                id: '2',
+                title: 'Optimasi Hormon dengan Peptide Therapy',
+                description: 'Pelajari bagaimana peptide dapat membantu mengoptimalkan kadar hormon alami tubuh untuk performa maksimal.',
+                pages: 67,
+                language: 'Indonesia',
+                downloadUrl: '/ebooks/optimasi-hormon-peptide.pdf',
+                previewUrl: '/ebooks/preview/optimasi-hormon-peptide-preview.pdf',
+                thumbnail: '/images/ebook-hormone-optimization.jpg',
+                category: 'Health',
+                tags: ['hormon', 'peptide', 'optimasi', 'performa'],
+                downloads: 0,
+                featured: false
+            },
+            {
+                id: '3',
+                title: 'Anti-Aging dengan Teknologi Peptide Modern',
+                description: 'Temukan rahasia anti-aging dengan peptide terdepan untuk kulit yang lebih muda dan vitalitas yang optimal.',
+                pages: 92,
+                language: 'Indonesia',
+                downloadUrl: '/ebooks/anti-aging-peptide.pdf',
+                previewUrl: '/ebooks/preview/anti-aging-peptide-preview.pdf',
+                thumbnail: '/images/ebook-anti-aging.jpg',
+                category: 'Beauty',
+                tags: ['anti-aging', 'kulit', 'peptide', 'vitalitas'],
+                downloads: 0,
+                featured: true
+            }
+        ];
+        fs.writeFileSync(EBOOKS_FILE, JSON.stringify(defaultEbooks, null, 2));
+    }
+};
+
+const readEbooks = () => {
+    try {
+        const data = fs.readFileSync(EBOOKS_FILE, 'utf8');
+        return JSON.parse(data);
+    } catch (error) {
+        return [];
+    }
+};
+
+const writeEbooks = (ebooks) => {
+    fs.writeFileSync(EBOOKS_FILE, JSON.stringify(ebooks, null, 2));
+};
+
+// Initialize ebooks
+initializeEbooks();
+
+// Get ebooks
+app.get('/api/ebooks', (req, res) => {
+    const ebooks = readEbooks();
+    res.json(ebooks);
+});
+
+// Download ebook (track downloads)
+app.post('/api/ebooks/:id/download', (req, res) => {
+    const { id } = req.params;
+    const ebooks = readEbooks();
+    const ebookIndex = ebooks.findIndex(e => e.id === id);
+
+    if (ebookIndex === -1) {
+        return res.status(404).json({ message: 'E-book not found' });
+    }
+
+    // Increment download count
+    ebooks[ebookIndex].downloads += 1;
+    writeEbooks(ebooks);
+
+    res.json({
+        message: 'Download tracked successfully',
+        downloadUrl: ebooks[ebookIndex].downloadUrl
+    });
 });
 
 

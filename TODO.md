@@ -17,6 +17,14 @@
 - [x] Implement chart filtering by category
 - [x] Add chart data visualization with Chart.js
 - [x] Remove payment method and redirect directly to WhatsApp for order continuation
+
+## New Features to Add
+- [ ] FITUR AFILIASI LOGIN USER (Affiliate feature for logged-in users)
+- [ ] CHAT BOT KONSULTASI (Enhanced consultation chatbot)
+- [ ] FITUR KODE REDEEM DISKON PRODUK (Product discount redeem code feature)
+- [ ] ELEMENT JOJO (JoJo's Bizarre Adventure themed elements)
+- [ ] E-BOOK (E-book section)
+- [ ] TESTIMONI (Testimonials)
 - [x] Fix text visibility in hero section (change gray text to white for better contrast)
 - [x] Optimize chatbot features with more quick reply buttons for common questions
 - [x] Clean up interface to make it more neat and organized

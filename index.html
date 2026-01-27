@@ -1096,6 +1096,94 @@
         </div>
     </section>
 
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 bg-gradient-to-b from-gray-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-50 to-pink-50 border border-red-100 rounded-full mb-6">
+                    <i class="fas fa-star text-red-500 mr-3"></i>
+                    <span class="text-red-700 font-medium">Customer Testimonials</span>
+                </div>
+                <h2 class="text-4xl lg:text-6xl font-black navy mb-6 leading-tight">What Our Customers Say</h2>
+                <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">Real experiences from customers who have transformed their health with JOESTAR peptides.</p>
+            </div>
+
+            <div id="testimonials-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- Testimonials will be loaded here -->
+            </div>
+
+            <div class="text-center">
+                <button onclick="openTestimonialModal()" class="btn-primary jojo-element">
+                    <i class="fas fa-plus mr-2"></i>Share Your Experience
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- E-books Section -->
+    <section id="ebooks" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-50 to-pink-50 border border-red-100 rounded-full mb-6">
+                    <i class="fas fa-book text-red-500 mr-3"></i>
+                    <span class="text-red-700 font-medium">Free Educational Resources</span>
+                </div>
+                <h2 class="text-4xl lg:text-6xl font-black navy mb-6 leading-tight">Knowledge is Power</h2>
+                <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">Download our comprehensive e-books to deepen your understanding of peptide therapy and optimal health.</p>
+            </div>
+
+            <div id="ebooks-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- E-books will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Affiliate Section -->
+    <section id="affiliate" class="py-20 bg-gradient-to-b from-red-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <div class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-red-50 to-pink-50 border border-red-100 rounded-full mb-6">
+                    <i class="fas fa-handshake text-red-500 mr-3"></i>
+                    <span class="text-red-700 font-medium">Partner Program</span>
+                </div>
+                <h2 class="text-4xl lg:text-6xl font-black navy mb-6 leading-tight">Earn with JOESTAR</h2>
+                <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">Join our affiliate program and earn commissions by sharing JOESTAR peptides with your network.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center jojo-element">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-percentage text-red-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold navy mb-4">10% Commission</h3>
+                    <p class="text-gray-600">Earn 10% commission on every successful referral sale.</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center jojo-element">
+                    <div class="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-trophy text-pink-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold navy mb-4">Tier System</h3>
+                    <p class="text-gray-600">Advance through Bronze, Silver, Gold, and Diamond tiers with higher earnings.</p>
+                </div>
+
+                <div class="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 text-center jojo-element">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-rocket text-purple-500 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold navy mb-4">Real-time Tracking</h3>
+                    <p class="text-gray-600">Monitor your referrals, commissions, and earnings in real-time.</p>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <button onclick="openAffiliateModal()" class="btn-primary jojo-element">
+                    <i class="fas fa-user-plus mr-2"></i>Join Affiliate Program
+                </button>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -1334,6 +1422,191 @@
             <div class="flex justify-between items-center mt-2 text-xs text-gray-500">
                 <span id="chat-status">Online</span>
                 <span id="message-count">0 pesan</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Affiliate Modal -->
+    <div id="affiliate-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-2xl font-bold navy">Affiliate Dashboard</h3>
+                        <button onclick="closeAffiliateModal()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="bg-gradient-to-r from-red-50 to-pink-50 p-6 rounded-lg border border-red-100">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-link text-red-500 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold navy">Referral Code</h4>
+                                    <p id="affiliate-code" class="text-red-600 font-bold text-lg">Loading...</p>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Referral Link</label>
+                                <div class="flex">
+                                    <input type="text" id="affiliate-link" readonly class="flex-1 px-3 py-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-red-500 bg-gray-50">
+                                    <button onclick="copyReferralLink()" class="px-4 py-2 bg-red-500 text-white rounded-r-md hover:bg-red-600 transition-colors">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-lg border border-green-100">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-trophy text-green-500 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold navy">Your Level</h4>
+                                    <p id="affiliate-level" class="text-green-600 font-bold text-lg">Bronze</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600">Earn more to reach higher tiers!</p>
+                        </div>
+
+                        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-lg border border-blue-100">
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-dollar-sign text-blue-500 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold navy">Total Earned</h4>
+                                    <p id="total-earned" class="text-blue-600 font-bold text-lg">Rp 0</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-600">Commission: <span id="pending-commission" class="font-semibold">Rp 0</span></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h4 class="text-lg font-semibold navy mb-4">Recent Referrals</h4>
+                        <div id="referrals-list" class="space-y-3">
+                            <p class="text-gray-600 text-center py-4">Loading referrals...</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h5 class="font-semibold text-blue-800 mb-2">How it works:</h5>
+                        <ul class="text-sm text-blue-700 space-y-1">
+                            <li>• Share your referral link with friends and followers</li>
+                            <li>• Earn 10% commission on every successful sale</li>
+                            <li>• Track your earnings and referrals in real-time</li>
+                            <li>• Advance through Bronze → Silver → Gold → Diamond tiers</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Discount Modal -->
+    <div id="discount-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-md w-full">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold navy">Apply Discount Code</h3>
+                        <button onclick="closeDiscountModal()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Discount Code</label>
+                            <input type="text" id="discount-code-input" placeholder="Enter your code..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500">
+                        </div>
+
+                        <button onclick="validateDiscountCode()" class="w-full btn-primary">
+                            <i class="fas fa-tag mr-2"></i>Apply Discount
+                        </button>
+
+                        <div id="discount-info" class="hidden bg-green-50 border border-green-200 rounded-lg p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-sm font-medium text-green-800">Discount Applied:</span>
+                                <span id="discount-amount" class="text-sm font-bold text-green-600">Rp 0</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-sm font-medium text-green-800">Final Total:</span>
+                                <span id="final-total" class="text-sm font-bold text-green-600">Rp 0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-600">Don't have a discount code?</p>
+                        <p class="text-sm text-gray-500">Check our social media for special offers!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonial Modal -->
+    <div id="testimonial-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white rounded-lg max-w-lg w-full">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold navy">Share Your Experience</h3>
+                        <button onclick="closeTestimonialModal()" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+
+                    <form id="testimonial-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Rating</label>
+                            <select id="testimonial-rating" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                                <option value="">Select rating...</option>
+                                <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                                <option value="4">⭐⭐⭐⭐ Very Good</option>
+                                <option value="3">⭐⭐⭐ Good</option>
+                                <option value="2">⭐⭐ Fair</option>
+                                <option value="1">⭐ Poor</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Product Used</label>
+                            <select id="testimonial-product" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500" required>
+                                <option value="">Select product...</option>
+                                <option value="Retatrutide 10mg">Retatrutide 10mg</option>
+                                <option value="CJC-1295 + Ipamorelin">CJC-1295 + Ipamorelin</option>
+                                <option value="GHK-Cu">GHK-Cu</option>
+                                <option value="Semax">Semax</option>
+                                <option value="Selank">Selank</option>
+                                <option value="MOTS-c">MOTS-c</option>
+                                <option value="DSIP">DSIP</option>
+                                <option value="HGH 191AA">HGH 191AA</option>
+                                <option value="Kisspeptin">Kisspeptin</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Your Review</label>
+                            <textarea id="testimonial-text" rows="4" placeholder="Tell us about your experience..." class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 resize-none" required></textarea>
+                        </div>
+
+                        <button type="button" onclick="submitTestimonial()" class="w-full btn-primary">
+                            <i class="fas fa-paper-plane mr-2"></i>Submit Testimonial
+                        </button>
+                    </form>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-600">Your testimonial will be reviewed before publishing.</p>
+                        <p class="text-sm text-gray-500">Thank you for sharing your experience!</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -2077,6 +2350,21 @@
         let chatbotMessages = JSON.parse(localStorage.getItem('joestarChatMessages')) || [];
         let messageCount = chatbotMessages.length;
 
+        function loadChatHistory() {
+            // Load previous messages from localStorage
+            const savedMessages = JSON.parse(localStorage.getItem('joestarChatMessages')) || [];
+            savedMessages.forEach(msg => {
+                addMessage(msg.text, msg.sender);
+            });
+        }
+
+        function saveMessage(text, sender) {
+            // Save message to localStorage
+            const messages = JSON.parse(localStorage.getItem('joestarChatMessages')) || [];
+            messages.push({ text, sender, timestamp: new Date().toISOString() });
+            localStorage.setItem('joestarChatMessages', JSON.stringify(messages));
+        }
+
         function initializeChatbot() {
             const chatbotToggle = document.getElementById('chatbot-toggle');
             const chatbotModal = document.getElementById('chatbot-modal');
@@ -2125,7 +2413,7 @@
             document.getElementById('message-count').textContent = messageCount + ' pesan';
         }
 
-        function sendMessage() {
+        async function sendMessage() {
             const chatInput = document.getElementById('chat-input');
             const message = chatInput.value.trim();
 
@@ -2137,11 +2425,23 @@
             // Clear input
             chatInput.value = '';
 
-            // Simulate bot response
-            setTimeout(() => {
-                const response = getBotResponse(message);
-                addMessage(response, 'bot');
-            }, 1000);
+            // Show typing indicator
+            addTypingIndicator();
+
+            // Simulate bot response delay
+            setTimeout(async () => {
+                try {
+                    const response = await getBotResponse(message);
+                    removeTypingIndicator();
+                    addMessage(response, 'bot');
+                    messageCount++;
+                    updateMessageCount();
+                } catch (error) {
+                    console.error('Chatbot error:', error);
+                    removeTypingIndicator();
+                    addMessage('Maaf, terjadi kesalahan. Silakan coba lagi.', 'bot');
+                }
+            }, 800);
         }
 
         function addMessage(text, sender) {
@@ -2174,105 +2474,122 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
 
-        function getBotResponse(message) {
-            // Show typing indicator
-            addTypingIndicator();
+        async function getBotResponse(message) {
+            return new Promise((resolve) => {
+                // Simulate processing delay
+                setTimeout(() => {
+                    // Enhanced intelligent responses based on keywords
+                    const lowerMessage = message.toLowerCase();
 
-            // Simulate processing delay
-            setTimeout(() => {
-                removeTypingIndicator();
+                    // Greeting responses
+                    if (lowerMessage.includes('halo') || lowerMessage.includes('hi') || lowerMessage.includes('hello') || lowerMessage.includes('hai')) {
+                        resolve('Halo! Selamat datang di konsultasi peptide JOESTAR. Saya siap membantu Anda dengan pertanyaan tentang kesehatan tubuh dan produk peptide kami. Apa yang ingin Anda ketahui?');
+                        return;
+                    }
 
-                // Enhanced intelligent responses based on keywords
-                const lowerMessage = message.toLowerCase();
+                    // Gratitude responses
+                    if (lowerMessage.includes('terima kasih') || lowerMessage.includes('thanks') || lowerMessage.includes('makasih')) {
+                        resolve('Sama-sama! Jika Anda memiliki pertanyaan lain tentang peptide atau kesehatan tubuh, jangan ragu untuk bertanya. Semoga informasi ini bermanfaat!');
+                        return;
+                    }
 
-                // Greeting responses
-                if (lowerMessage.includes('halo') || lowerMessage.includes('hi') || lowerMessage.includes('hello') || lowerMessage.includes('hai')) {
-                    return 'Halo! Selamat datang di konsultasi peptide JOESTAR. Saya siap membantu Anda dengan pertanyaan tentang kesehatan tubuh dan produk peptide kami. Apa yang ingin Anda ketahui?';
-                }
+                    // Product-specific responses
+                    if (lowerMessage.includes('retatrutide') || lowerMessage.includes('metabolik') || lowerMessage.includes('metabolic')) {
+                        resolve('Retatrutide adalah peptida metabolik canggih yang membantu mengoptimalkan metabolisme tubuh, meningkatkan pembakaran lemak, dan meningkatkan sensitivitas insulin. Cocok untuk manajemen berat badan dan optimasi energi. Harga: 1.5 JT per vial.');
+                        return;
+                    }
 
-                // Gratitude responses
-                if (lowerMessage.includes('terima kasih') || lowerMessage.includes('thanks') || lowerMessage.includes('makasih')) {
-                    return 'Sama-sama! Jika Anda memiliki pertanyaan lain tentang peptide atau kesehatan tubuh, jangan ragu untuk bertanya. Semoga informasi ini bermanfaat!';
-                }
+                    if (lowerMessage.includes('cjc-1295') || lowerMessage.includes('ipamorelin') || lowerMessage.includes('growth hormone') || lowerMessage.includes('hormon pertumbuhan')) {
+                        resolve('CJC-1295 + Ipamorelin adalah kombinasi peptida yang merangsang produksi hormon pertumbuhan alami. Membantu meningkatkan massa otot, pemulihan, dan kualitas tidur. Harga: 2.0 JT per vial.');
+                        return;
+                    }
 
-                // Product-specific responses
-                if (lowerMessage.includes('retatrutide') || lowerMessage.includes('metabolik') || lowerMessage.includes('metabolic')) {
-                    return 'Retatrutide adalah peptida metabolik canggih yang membantu mengoptimalkan metabolisme tubuh, meningkatkan pembakaran lemak, dan meningkatkan sensitivitas insulin. Cocok untuk manajemen berat badan dan optimasi energi. Harga: 1.5 JT per vial.';
-                }
+                    if (lowerMessage.includes('ghk-cu') || lowerMessage.includes('anti-aging') || lowerMessage.includes('anti penuaan') || lowerMessage.includes('kulit')) {
+                        resolve('GHK-Cu adalah peptida perbaikan jaringan dan anti-penuaan yang mendukung regenerasi kulit, penyembuhan luka, dan kesehatan seluler. Baik untuk kesehatan kulit dan vitalitas. Harga: 1.8 JT per vial.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('cjc-1295') || lowerMessage.includes('ipamorelin') || lowerMessage.includes('growth hormone') || lowerMessage.includes('hormon pertumbuhan')) {
-                    return 'CJC-1295 + Ipamorelin adalah kombinasi peptida yang merangsang produksi hormon pertumbuhan alami. Membantu meningkatkan massa otot, pemulihan, dan kualitas tidur. Harga: 2.0 JT per vial.';
-                }
+                    if (lowerMessage.includes('semax') || lowerMessage.includes('cognitive') || lowerMessage.includes('kognitif') || lowerMessage.includes('otak')) {
+                        resolve('Semax adalah peptida peningkat kognitif yang mendukung fungsi otak, memori, dan fokus. Membantu meningkatkan kinerja mental dan neuroproteksi. Harga: 1.2 JT per vial.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('ghk-cu') || lowerMessage.includes('anti-aging') || lowerMessage.includes('anti penuaan') || lowerMessage.includes('kulit')) {
-                    return 'GHK-Cu adalah peptida perbaikan jaringan dan anti-penuaan yang mendukung regenerasi kulit, penyembuhan luka, dan kesehatan seluler. Baik untuk kesehatan kulit dan vitalitas. Harga: 1.8 JT per vial.';
-                }
+                    if (lowerMessage.includes('selank') || lowerMessage.includes('anxiety') || lowerMessage.includes('kecemasan') || lowerMessage.includes('stress')) {
+                        resolve('Selank adalah peptida yang mengurangi kecemasan dan mendukung fungsi kognitif. Membantu mengelola stres dan meningkatkan ketenangan mental. Harga: 1.0 JT per vial.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('semax') || lowerMessage.includes('cognitive') || lowerMessage.includes('kognitif') || lowerMessage.includes('otak')) {
-                    return 'Semax adalah peptida peningkat kognitif yang mendukung fungsi otak, memori, dan fokus. Membantu meningkatkan kinerja mental dan neuroproteksi. Harga: 1.2 JT per vial.';
-                }
+                    if (lowerMessage.includes('mots-c') || lowerMessage.includes('metabolic activator') || lowerMessage.includes('pengaktif metabolik')) {
+                        resolve('MOTS-c adalah peptida pengaktif metabolik yang meningkatkan metabolisme energi, sensitivitas insulin, dan fungsi mitokondria. Baik untuk kesehatan metabolik. Harga: 1.3 JT per vial.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('selank') || lowerMessage.includes('anxiety') || lowerMessage.includes('kecemasan') || lowerMessage.includes('stress')) {
-                    return 'Selank adalah peptida yang mengurangi kecemasan dan mendukung fungsi kognitif. Membantu mengelola stres dan meningkatkan ketenangan mental. Harga: 1.0 JT per vial.';
-                }
+                    if (lowerMessage.includes('dsip') || lowerMessage.includes('sleep') || lowerMessage.includes('tidur')) {
+                        resolve('DSIP adalah peptida yang meningkatkan kualitas tidur dan pemulihan. Membantu mengatur pola tidur dan mendukung pemulihan tubuh. Harga: 1.1 JT per vial.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('mots-c') || lowerMessage.includes('metabolic activator') || lowerMessage.includes('pengaktif metabolik')) {
-                    return 'MOTS-c adalah peptida pengaktif metabolik yang meningkatkan metabolisme energi, sensitivitas insulin, dan fungsi mitokondria. Baik untuk kesehatan metabolik. Harga: 1.3 JT per vial.';
-                }
+                    if (lowerMessage.includes('hgh') || lowerMessage.includes('191aa')) {
+                        resolve('HGH 191AA adalah hormon pertumbuhan manusia rekombinan yang mendukung pertumbuhan otot, kekuatan tulang, dan vitalitas keseluruhan. Harga: 3.0 JT per vial.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('dsip') || lowerMessage.includes('sleep') || lowerMessage.includes('tidur')) {
-                    return 'DSIP adalah peptida yang meningkatkan kualitas tidur dan pemulihan. Membantu mengatur pola tidur dan mendukung pemulihan tubuh. Harga: 1.1 JT per vial.';
-                }
+                    if (lowerMessage.includes('kisspeptin') || lowerMessage.includes('hormone regulation') || lowerMessage.includes('pengatur hormon')) {
+                        resolve('Kisspeptin adalah peptida pengatur hormon yang mendukung regulasi hormon alami dan fungsi endokrin. Harga: 1.6 JT per vial.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('hgh') || lowerMessage.includes('191aa')) {
-                    return 'HGH 191AA adalah hormon pertumbuhan manusia rekombinan yang mendukung pertumbuhan otot, kekuatan tulang, dan vitalitas keseluruhan. Harga: 3.0 JT per vial.';
-                }
+                    // General questions
+                    if (lowerMessage.includes('apa itu peptida') || lowerMessage.includes('peptida apa') || lowerMessage.includes('tentang peptida')) {
+                        resolve('Peptida adalah rantai pendek asam amino yang bertindak sebagai molekul pensinyalan dalam tubuh. Mereka membantu mengatur berbagai proses biologis seperti regulasi hormon, fungsi kekebalan, dan perbaikan jaringan. Peptida kami diproduksi dengan kemurnian 99%+ dan diuji laboratorium.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('kisspeptin') || lowerMessage.includes('hormone regulation') || lowerMessage.includes('pengatur hormon')) {
-                    return 'Kisspeptin adalah peptida pengatur hormon yang mendukung regulasi hormon alami dan fungsi endokrin. Harga: 1.6 JT per vial.';
-                }
+                    if (lowerMessage.includes('dosis') || lowerMessage.includes('dose') || lowerMessage.includes('penggunaan') || lowerMessage.includes('cara pakai')) {
+                        resolve('Dosis peptida bervariasi tergantung jenisnya. Untuk saran dosis yang tepat, konsultasikan dengan ahli kesehatan atau dokter. Kami merekomendasikan memulai dengan dosis terendah dan berkonsultasi dengan profesional medis. Semua produk dilengkapi panduan penggunaan.');
+                        return;
+                    }
 
-                // General questions
-                if (lowerMessage.includes('apa itu peptida') || lowerMessage.includes('peptida apa') || lowerMessage.includes('tentang peptida')) {
-                    return 'Peptida adalah rantai pendek asam amino yang bertindak sebagai molekul pensinyalan dalam tubuh. Mereka membantu mengatur berbagai proses biologis seperti regulasi hormon, fungsi kekebalan, dan perbaikan jaringan. Peptida kami diproduksi dengan kemurnian 99%+ dan diuji laboratorium.';
-                }
+                    if (lowerMessage.includes('efek samping') || lowerMessage.includes('side effects') || lowerMessage.includes('aman') || lowerMessage.includes('bahaya')) {
+                        resolve('Peptida kami diproduksi dengan standar kualitas tinggi dan diuji laboratorium. Namun, seperti suplemen lainnya, beberapa orang mungkin mengalami efek samping ringan. Selalu konsultasikan dengan dokter sebelum penggunaan, terutama jika Anda memiliki kondisi kesehatan tertentu.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('dosis') || lowerMessage.includes('dose') || lowerMessage.includes('penggunaan') || lowerMessage.includes('cara pakai')) {
-                    return 'Dosis peptida bervariasi tergantung jenisnya. Untuk saran dosis yang tepat, konsultasikan dengan ahli kesehatan atau dokter. Kami merekomendasikan memulai dengan dosis terendah dan berkonsultasi dengan profesional medis. Semua produk dilengkapi panduan penggunaan.';
-                }
+                    if (lowerMessage.includes('penyimpanan') || lowerMessage.includes('storage') || lowerMessage.includes('simpan')) {
+                        resolve('Simpan peptida di tempat sejuk dan kering, jauh dari sinar matahari langsung. Beberapa peptida mungkin memerlukan refrigerasi. Ikuti instruksi penyimpanan spesifik untuk setiap produk. Semua produk dikemas dalam kemasan steril vakum.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('efek samping') || lowerMessage.includes('side effects') || lowerMessage.includes('aman') || lowerMessage.includes('bahaya')) {
-                    return 'Peptida kami diproduksi dengan standar kualitas tinggi dan diuji laboratorium. Namun, seperti suplemen lainnya, beberapa orang mungkin mengalami efek samping ringan. Selalu konsultasikan dengan dokter sebelum penggunaan, terutama jika Anda memiliki kondisi kesehatan tertentu.';
-                }
+                    if (lowerMessage.includes('harga') || lowerMessage.includes('price') || lowerMessage.includes('biaya') || lowerMessage.includes('berapa')) {
+                        resolve('Harga peptida kami berkisar dari 1.0 JT hingga 3.0 JT tergantung jenis dan jumlah. Kami menawarkan pengiriman gratis untuk pesanan di atas 5.0 JT. Kunjungi halaman produk untuk informasi harga terkini dan diskon khusus.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('penyimpanan') || lowerMessage.includes('storage') || lowerMessage.includes('simpan')) {
-                    return 'Simpan peptida di tempat sejuk dan kering, jauh dari sinar matahari langsung. Beberapa peptida mungkin memerlukan refrigerasi. Ikuti instruksi penyimpanan spesifik untuk setiap produk. Semua produk dikemas dalam kemasan steril vakum.';
-                }
+                    if (lowerMessage.includes('pesan') || lowerMessage.includes('order') || lowerMessage.includes('beli') || lowerMessage.includes('checkout')) {
+                        resolve('Untuk memesan, tambahkan produk ke keranjang dan ikuti proses checkout. Kami akan menghubungi Anda melalui WhatsApp untuk konfirmasi pengiriman. Pengiriman dilakukan secara aman dan terpercaya ke seluruh Indonesia dan internasional.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('harga') || lowerMessage.includes('price') || lowerMessage.includes('biaya') || lowerMessage.includes('berapa')) {
-                    return 'Harga peptida kami berkisar dari 1.0 JT hingga 3.0 JT tergantung jenis dan jumlah. Kami menawarkan pengiriman gratis untuk pesanan di atas 5.0 JT. Kunjungi halaman produk untuk informasi harga terkini dan diskon khusus.';
-                }
+                    if (lowerMessage.includes('pengiriman') || lowerMessage.includes('shipping') || lowerMessage.includes('kirim')) {
+                        resolve('Kami menyediakan pengiriman aman ke seluruh Indonesia dan internasional. Pengiriman gratis untuk pesanan di atas 5.0 JT. Paket dikemas dengan hati-hati dan dilacak hingga tujuan. Estimasi pengiriman 2-7 hari kerja.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('pesan') || lowerMessage.includes('order') || lowerMessage.includes('beli') || lowerMessage.includes('checkout')) {
-                    return 'Untuk memesan, tambahkan produk ke keranjang dan ikuti proses checkout. Kami akan menghubungi Anda melalui WhatsApp untuk konfirmasi pengiriman. Pengiriman dilakukan secara aman dan terpercaya ke seluruh Indonesia dan internasional.';
-                }
+                    if (lowerMessage.includes('kualitas') || lowerMessage.includes('quality') || lowerMessage.includes('kemurnian')) {
+                        resolve('Semua peptida kami memiliki kemurnian 99%+ dan diuji oleh laboratorium independen. Kami menggunakan teknologi sintesis peptida canggih dan standar GMP. Setiap batch memiliki sertifikat analisis dan dapat dilacak.');
+                        return;
+                    }
 
-                if (lowerMessage.includes('pengiriman') || lowerMessage.includes('shipping') || lowerMessage.includes('kirim')) {
-                    return 'Kami menyediakan pengiriman aman ke seluruh Indonesia dan internasional. Pengiriman gratis untuk pesanan di atas 5.0 JT. Paket dikemas dengan hati-hati dan dilacak hingga tujuan. Estimasi pengiriman 2-7 hari kerja.';
-                }
+                    // General health questions
+                    if (lowerMessage.includes('kesehatan') || lowerMessage.includes('health') || lowerMessage.includes('tubuh') || lowerMessage.includes('body')) {
+                        resolve('Kesehatan tubuh adalah prioritas utama kami. Peptida JOESTAR dirancang untuk mendukung berbagai aspek kesehatan seperti metabolisme, kognitif, pemulihan, dan anti-penuaan. Apa aspek kesehatan spesifik yang ingin Anda ketahui?');
+                        return;
+                    }
 
-                if (lowerMessage.includes('kualitas') || lowerMessage.includes('quality') || lowerMessage.includes('kemurnian')) {
-                    return 'Semua peptida kami memiliki kemurnian 99%+ dan diuji oleh laboratorium independen. Kami menggunakan teknologi sintesis peptida canggih dan standar GMP. Setiap batch memiliki sertifikat analisis dan dapat dilacak.';
-                }
-
-                // General health questions
-                if (lowerMessage.includes('kesehatan') || lowerMessage.includes('health') || lowerMessage.includes('tubuh') || lowerMessage.includes('body')) {
-                    return 'Kesehatan tubuh adalah prioritas utama kami. Peptida JOESTAR dirancang untuk mendukung berbagai aspek kesehatan seperti metabolisme, kognitif, pemulihan, dan anti-penuaan. Apa aspek kesehatan spesifik yang ingin Anda ketahui?';
-                }
-
-                // Default response
-                return 'Terima kasih atas pertanyaan Anda! Saya siap membantu dengan informasi tentang produk peptide kami. Anda bisa bertanya tentang spesifik produk, harga, pengiriman, atau saran penggunaan. Apa yang ingin Anda ketahui lebih lanjut?';
-            }, 800); // 800ms delay for natural feel
+                    // Default response
+                    resolve('Terima kasih atas pertanyaan Anda! Saya siap membantu dengan informasi tentang produk peptide kami. Anda bisa bertanya tentang spesifik produk, harga, pengiriman, atau saran penggunaan. Apa yang ingin Anda ketahui lebih lanjut?');
+                }, 800); // 800ms delay for natural feel
+            });
         }
 
         function addTypingIndicator() {
@@ -2305,11 +2622,268 @@
             }
         }
 
+        // Affiliate System Functions
+        async function loadAffiliateDashboard() {
+            if (!currentUser) return;
+
+            try {
+                const response = await apiRequest('/affiliate/dashboard');
+                const data = response;
+
+                // Update affiliate UI
+                document.getElementById('affiliate-code').textContent = data.affiliate.code;
+                document.getElementById('affiliate-link').value = data.referralLink;
+                document.getElementById('affiliate-level').textContent = data.affiliate.level;
+                document.getElementById('total-earned').textContent = `Rp ${data.affiliate.totalEarned.toLocaleString()}`;
+                document.getElementById('pending-commission').textContent = `Rp ${data.affiliate.commission.toLocaleString()}`;
+
+                // Update referrals list
+                const referralsList = document.getElementById('referrals-list');
+                if (data.affiliate.referrals && data.affiliate.referrals.length > 0) {
+                    referralsList.innerHTML = data.affiliate.referrals.map(ref => `
+                        <div class="flex justify-between items-center border-b border-gray-200 py-2">
+                            <div>
+                                <p class="font-semibold">Rp ${ref.amount.toLocaleString()}</p>
+                                <p class="text-sm text-gray-600">${new Date(ref.date).toLocaleDateString()}</p>
+                            </div>
+                            <span class="text-green-600 font-semibold">+Rp ${ref.commission.toLocaleString()}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    referralsList.innerHTML = '<p class="text-gray-600 text-center py-4">Belum ada referral</p>';
+                }
+            } catch (error) {
+                console.error('Error loading affiliate dashboard:', error);
+            }
+        }
+
+        function copyReferralLink() {
+            const linkInput = document.getElementById('affiliate-link');
+            linkInput.select();
+            document.execCommand('copy');
+            showNotification('Referral link copied to clipboard!');
+        }
+
+        // Discount Code Functions
+        async function validateDiscountCode() {
+            const code = document.getElementById('discount-code-input').value.trim();
+            if (!code) {
+                showNotification('Please enter a discount code');
+                return;
+            }
+
+            // Calculate current cart total
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            if (total === 0) {
+                showNotification('Add items to cart first');
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/discount/validate`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, orderAmount: total })
+                });
+
+                const data = await response.json();
+
+                if (data.valid) {
+                    document.getElementById('discount-amount').textContent = `Rp ${data.discount.toLocaleString()}`;
+                    document.getElementById('final-total').textContent = `Rp ${data.finalAmount.toLocaleString()}`;
+                    document.getElementById('discount-info').classList.remove('hidden');
+                    showNotification(`Discount applied: ${data.description}`);
+                } else {
+                    showNotification(data.message);
+                }
+            } catch (error) {
+                showNotification('Error validating discount code');
+                console.error('Discount validation error:', error);
+            }
+        }
+
+        // Testimonials Functions
+        async function loadTestimonials() {
+            try {
+                const response = await fetch(`${API_BASE}/testimonials`);
+                const testimonials = await response.json();
+
+                const testimonialsContainer = document.getElementById('testimonials-container');
+                testimonialsContainer.innerHTML = testimonials.map(testimonial => `
+                    <div class="bg-white rounded-lg p-6 shadow-lg border border-gray-100">
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400">
+                                ${'★'.repeat(testimonial.rating)}${'☆'.repeat(5-testimonial.rating)}
+                            </div>
+                            <span class="ml-2 text-gray-600">${testimonial.rating}/5</span>
+                        </div>
+                        <p class="text-gray-700 mb-4 italic">"${testimonial.text}"</p>
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="font-semibold navy">${testimonial.name}</p>
+                                <p class="text-sm text-gray-600">${testimonial.location}</p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-gray-600">${testimonial.product}</p>
+                                <p class="text-xs text-gray-500">${testimonial.date}</p>
+                            </div>
+                        </div>
+                        ${testimonial.verified ? '<div class="mt-2"><span class="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">✓ Verified Purchase</span></div>' : ''}
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading testimonials:', error);
+            }
+        }
+
+        async function submitTestimonial() {
+            if (!currentUser) {
+                showNotification('Please login to submit a testimonial');
+                openLogin();
+                return;
+            }
+
+            const rating = document.getElementById('testimonial-rating').value;
+            const text = document.getElementById('testimonial-text').value.trim();
+            const product = document.getElementById('testimonial-product').value;
+
+            if (!rating || !text || !product) {
+                showNotification('Please fill in all fields');
+                return;
+            }
+
+            try {
+                const response = await apiRequest('/testimonials', {
+                    method: 'POST',
+                    body: JSON.stringify({ rating, text, product })
+                });
+
+                showNotification('Testimonial submitted successfully!');
+                document.getElementById('testimonial-form').reset();
+                closeTestimonialModal();
+                loadTestimonials(); // Reload testimonials
+            } catch (error) {
+                showNotification(error.message || 'Error submitting testimonial');
+            }
+        }
+
+        // E-book Functions
+        async function loadEbooks() {
+            try {
+                const response = await fetch(`${API_BASE}/ebooks`);
+                const ebooks = await response.json();
+
+                const ebooksContainer = document.getElementById('ebooks-container');
+                ebooksContainer.innerHTML = ebooks.map(ebook => `
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100">
+                        <div class="p-6">
+                            <div class="flex items-start space-x-4">
+                                <img src="${ebook.thumbnail}" alt="${ebook.title}" class="w-20 h-28 object-cover rounded-lg flex-shrink-0">
+                                <div class="flex-1">
+                                    <h3 class="text-lg font-semibold navy mb-2">${ebook.title}</h3>
+                                    <p class="text-gray-600 text-sm mb-3">${ebook.description}</p>
+                                    <div class="flex items-center space-x-4 text-sm text-gray-500 mb-3">
+                                        <span>${ebook.pages} halaman</span>
+                                        <span>${ebook.language}</span>
+                                        <span>${ebook.downloads} downloads</span>
+                                    </div>
+                                    <div class="flex flex-wrap gap-1 mb-4">
+                                        ${ebook.tags.map(tag => `<span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">${tag}</span>`).join('')}
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button onclick="previewEbook('${ebook.id}')" class="bg-gray-200 text-gray-800 px-3 py-1 rounded-lg text-sm hover:bg-gray-300 transition-colors">Preview</button>
+                                        <button onclick="downloadEbook('${ebook.id}')" class="btn-primary text-sm px-3 py-1">Download</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (error) {
+                console.error('Error loading ebooks:', error);
+            }
+        }
+
+        async function downloadEbook(ebookId) {
+            try {
+                const response = await fetch(`${API_BASE}/ebooks/${ebookId}/download`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+
+                // Open download link
+                window.open(data.downloadUrl, '_blank');
+                showNotification('E-book download started!');
+            } catch (error) {
+                showNotification('Error downloading e-book');
+                console.error('Download error:', error);
+            }
+        }
+
+        function previewEbook(ebookId) {
+            // For now, just show a message. In real implementation, open preview modal or PDF viewer
+            showNotification('Preview feature coming soon!');
+        }
+
+        // JoJo Elements Functions
+        function initializeJoJoElements() {
+            // Add some JoJo-themed animations and effects
+            const jojoElements = document.querySelectorAll('.jojo-element');
+            jojoElements.forEach((element, index) => {
+                element.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            // Add star platinum effect to buttons on hover
+            const buttons = document.querySelectorAll('.btn-primary');
+            buttons.forEach(button => {
+                button.addEventListener('mouseenter', () => {
+                    button.style.boxShadow = '0 0 20px rgba(220, 38, 38, 0.6), 0 4px 15px rgba(220, 38, 38, 0.3)';
+                });
+                button.addEventListener('mouseleave', () => {
+                    button.style.boxShadow = '0 4px 15px rgba(220, 38, 38, 0.3)';
+                });
+            });
+        }
+
+        // Modal Functions
+        function openAffiliateModal() {
+            if (!currentUser) {
+                showNotification('Please login to access affiliate features');
+                openLogin();
+                return;
+            }
+            document.getElementById('affiliate-modal').classList.remove('hidden');
+            loadAffiliateDashboard();
+        }
+
+        function closeAffiliateModal() {
+            document.getElementById('affiliate-modal').classList.add('hidden');
+        }
+
+        function openDiscountModal() {
+            document.getElementById('discount-modal').classList.remove('hidden');
+        }
+
+        function closeDiscountModal() {
+            document.getElementById('discount-modal').classList.add('hidden');
+        }
+
+        function openTestimonialModal() {
+            document.getElementById('testimonial-modal').classList.remove('hidden');
+        }
+
+        function closeTestimonialModal() {
+            document.getElementById('testimonial-modal').classList.add('hidden');
+        }
+
         // Initialize
         updateCartDisplay();
         checkAuthStatus();
         initializeChart();
         initializeChatbot();
+        initializeJoJoElements();
+        loadTestimonials();
+        loadEbooks();
     </script>
 </body>
 </html>
