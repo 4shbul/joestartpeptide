@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3001;
 const JWT_SECRET = 'joestar-peptide-secret-key-2023';
 
 // Middleware
