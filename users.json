@@ -19,5 +19,12 @@
     "email": "test@example.com",
     "password": "$2a$10$a3tobzWrOqs0xFG50RPkCelKPqaM.24SLho1GwLwRSY5Me6Ew3mcu",
     "createdAt": "2026-01-27T11:47:44.202Z"
+  },
+  {
+    "id": "1769595632609",
+    "name": "Test User",
+    "email": "test1769595632256@example.com",
+    "password": "$2a$10$r1LDg3F4y0ZJxAnZuXpiQuXW6/P0ypgwVZ4tvf4EMUKrxifmMnBOW",
+    "createdAt": "2026-01-28T10:20:32.610Z"
   }
 ]

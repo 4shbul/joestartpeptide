@@ -1,0 +1,467 @@
+[
+  {
+    "id": "RETATRUTIDE-10MG",
+    "name": "Retatrutide 10mg",
+    "category": "metabolic",
+    "description": "Advanced metabolic optimization peptide for weight management and energy enhancement",
+    "price": 1500000,
+    "originalPrice": 1800000,
+    "dosage": "10mg per vial",
+    "purity": "99.8%",
+    "labTested": true,
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/retatrutide.jpg",
+    "benefits": [
+      "Weight management",
+      "Energy optimization",
+      "Metabolic health",
+      "Appetite control"
+    ],
+    "usage": "Subcutaneous injection, 2-3 times per week",
+    "tags": [
+      "metabolic",
+      "weight-loss",
+      "energy",
+      "glp-1"
+    ]
+  },
+  {
+    "id": "MOTS-C-10MG",
+    "name": "MOTS-c 10mg",
+    "category": "metabolic",
+    "description": "Mitochondrial-derived peptide for metabolic activation and cellular energy",
+    "price": 1300000,
+    "originalPrice": 1500000,
+    "dosage": "10mg per vial",
+    "purity": "99.5%",
+    "labTested": true,
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/mots-c.jpg",
+    "benefits": [
+      "Metabolic activation",
+      "Cellular energy",
+      "Anti-aging",
+      "Fat metabolism"
+    ],
+    "usage": "Subcutaneous injection, 2-3 times per week",
+    "tags": [
+      "metabolic",
+      "mitochondria",
+      "energy",
+      "anti-aging"
+    ]
+  },
+  {
+    "id": "AOD-9604-2MG",
+    "name": "AOD-9604 2mg",
+    "category": "metabolic",
+    "description": "C-terminal fragment of HGH for targeted fat reduction without affecting growth",
+    "price": 900000,
+    "originalPrice": 1100000,
+    "dosage": "2mg per vial",
+    "purity": "99.2%",
+    "labTested": true,
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/aod-9604.jpg",
+    "benefits": [
+      "Targeted fat loss",
+      "Metabolic enhancement",
+      "No growth effects",
+      "Appetite suppression"
+    ],
+    "usage": "Subcutaneous injection, daily dosing",
+    "tags": [
+      "metabolic",
+      "fat-loss",
+      "hgh-fragment",
+      "targeted"
+    ]
+  },
+  {
+    "id": "CJC-1295-IPAMORELIN",
+    "name": "CJC-1295 + Ipamorelin",
+    "category": "growth-hormone",
+    "description": "Powerful growth hormone secretagogue blend for muscle growth and recovery",
+    "price": 2000000,
+    "originalPrice": 2300000,
+    "dosage": "2mg CJC-1295 + 2mg Ipamorelin per vial",
+    "purity": "99.7%",
+    "labTested": true,
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/cjc-ipamorelin.jpg",
+    "benefits": [
+      "Muscle growth",
+      "Fat loss",
+      "Recovery enhancement",
+      "Sleep quality",
+      "Anti-aging"
+    ],
+    "usage": "Subcutaneous injection, nightly before bed",
+    "tags": [
+      "growth-hormone",
+      "muscle-growth",
+      "recovery",
+      "anti-aging"
+    ]
+  },
+  {
+    "id": "TESAMORELIN-2MG",
+    "name": "Tesamorelin 2mg",
+    "category": "growth-hormone",
+    "description": "Growth hormone releasing hormone for abdominal fat reduction and HIV lipodystrophy",
+    "price": 1800000,
+    "originalPrice": 2100000,
+    "dosage": "2mg per vial",
+    "purity": "99.6%",
+    "labTested": true,
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/tesamorelin.jpg",
+    "benefits": [
+      "Abdominal fat reduction",
+      "HIV support",
+      "Metabolic health",
+      "Body composition"
+    ],
+    "usage": "Subcutaneous injection, nightly before bed",
+    "tags": [
+      "growth-hormone",
+      "fat-loss",
+      "hiv",
+      "metabolic"
+    ]
+  },
+  {
+    "id": "HGH-191AA-10IU",
+    "name": "HGH 191AA 10IU",
+    "category": "growth-hormone",
+    "description": "Full sequence human growth hormone for comprehensive health optimization",
+    "price": 3000000,
+    "originalPrice": 3500000,
+    "dosage": "10IU per vial",
+    "purity": "99.9%",
+    "labTested": true,
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/hgh-191aa.jpg",
+    "benefits": [
+      "Muscle growth",
+      "Fat loss",
+      "Recovery",
+      "Anti-aging",
+      "Immune support",
+      "Bone health"
+    ],
+    "usage": "Subcutaneous injection, 3-5 times per week",
+    "tags": [
+      "growth-hormone",
+      "muscle-growth",
+      "anti-aging",
+      "comprehensive"
+    ]
+  },
+  {
+    "id": "GHK-CU-100MG",
+    "name": "GHK-Cu 100mg",
+    "category": "anti-aging",
+    "description": "Copper tripeptide for tissue repair, wound healing, and skin regeneration",
+    "price": 1800000,
+    "originalPrice": 2000000,
+    "dosage": "100mg per vial",
+    "purity": "99.4%",
+    "labTested": true,
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/ghk-cu.jpg",
+    "benefits": [
+      "Skin regeneration",
+      "Wound healing",
+      "Hair growth",
+      "Anti-aging",
+      "Tissue repair"
+    ],
+    "usage": "Topical application or subcutaneous injection",
+    "tags": [
+      "anti-aging",
+      "skin",
+      "wound-healing",
+      "regeneration"
+    ]
+  },
+  {
+    "id": "EPITHALAMIN-10MG",
+    "name": "Epithalamin 10mg",
+    "category": "anti-aging",
+    "description": "Epithalamin (Epitalon) for telomere protection and anti-aging effects",
+    "price": 1600000,
+    "originalPrice": 1900000,
+    "dosage": "10mg per vial",
+    "purity": "99.3%",
+    "labTested": true,
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/epithalamin.jpg",
+    "benefits": [
+      "Telomere protection",
+      "Anti-aging",
+      "Longevity",
+      "Immune modulation"
+    ],
+    "usage": "Subcutaneous injection, 2-3 times per week",
+    "tags": [
+      "anti-aging",
+      "telomere",
+      "longevity",
+      "immune"
+    ]
+  },
+  {
+    "id": "THYMOSIN-ALPHA-1-10MG",
+    "name": "Thymosin Alpha-1 10mg",
+    "category": "anti-aging",
+    "description": "Immune system modulator for enhanced immunity and anti-aging benefits",
+    "price": 1400000,
+    "originalPrice": 1700000,
+    "dosage": "10mg per vial",
+    "purity": "99.5%",
+    "labTested": true,
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/thymosin-alpha-1.jpg",
+    "benefits": [
+      "Immune enhancement",
+      "Anti-aging",
+      "Viral defense",
+      "Autoimmune support"
+    ],
+    "usage": "Subcutaneous injection, 2-3 times per week",
+    "tags": [
+      "anti-aging",
+      "immune",
+      "viral",
+      "autoimmune"
+    ]
+  },
+  {
+    "id": "SEMAX-3MG",
+    "name": "Semax 3mg",
+    "category": "cognitive",
+    "description": "Nootropic peptide for cognitive enhancement and neuroprotection",
+    "price": 1200000,
+    "originalPrice": 1400000,
+    "dosage": "3mg per vial",
+    "purity": "99.6%",
+    "labTested": true,
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/semax.jpg",
+    "benefits": [
+      "Cognitive enhancement",
+      "Memory improvement",
+      "Neuroprotection",
+      "Focus",
+      "Stress reduction"
+    ],
+    "usage": "Intranasal administration, 2-3 times daily",
+    "tags": [
+      "cognitive",
+      "nootropic",
+      "memory",
+      "neuroprotection"
+    ]
+  },
+  {
+    "id": "SELANK-3MG",
+    "name": "Selank 3mg",
+    "category": "cognitive",
+    "description": "Anxiolytic peptide for anxiety reduction and cognitive support",
+    "price": 1000000,
+    "originalPrice": 1200000,
+    "dosage": "3mg per vial",
+    "purity": "99.4%",
+    "labTested": true,
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/selank.jpg",
+    "benefits": [
+      "Anxiety reduction",
+      "Cognitive enhancement",
+      "Stress relief",
+      "Memory support"
+    ],
+    "usage": "Sublingual administration, 2-3 times daily",
+    "tags": [
+      "cognitive",
+      "anxiety",
+      "stress",
+      "memory"
+    ]
+  },
+  {
+    "id": "NOOPEPT-20MG",
+    "name": "Noopept 20mg",
+    "category": "cognitive",
+    "description": "Smart peptide for learning enhancement and neuroprotection",
+    "price": 800000,
+    "originalPrice": 1000000,
+    "dosage": "20mg per vial",
+    "purity": "99.2%",
+    "labTested": true,
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/noopept.jpg",
+    "benefits": [
+      "Learning enhancement",
+      "Neuroprotection",
+      "Memory improvement",
+      "Cognitive function"
+    ],
+    "usage": "Sublingual administration, 2 times daily",
+    "tags": [
+      "cognitive",
+      "learning",
+      "memory",
+      "neuroprotection"
+    ]
+  },
+  {
+    "id": "TB-500-5MG",
+    "name": "TB-500 5mg",
+    "category": "recovery",
+    "description": "Thymosin Beta-4 for tissue repair and injury recovery",
+    "price": 1500000,
+    "originalPrice": 1800000,
+    "dosage": "5mg per vial",
+    "purity": "99.5%",
+    "labTested": true,
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/tb-500.jpg",
+    "benefits": [
+      "Tissue repair",
+      "Injury recovery",
+      "Muscle healing",
+      "Anti-inflammatory"
+    ],
+    "usage": "Subcutaneous injection, 2-3 times per week",
+    "tags": [
+      "recovery",
+      "tissue-repair",
+      "injury",
+      "healing"
+    ]
+  },
+  {
+    "id": "BPC-157-5MG",
+    "name": "BPC-157 5mg",
+    "category": "recovery",
+    "description": "Body protection compound for accelerated healing and tissue repair",
+    "price": 1400000,
+    "originalPrice": 1700000,
+    "dosage": "5mg per vial",
+    "purity": "99.4%",
+    "labTested": true,
+    "inStock": true,
+    "featured": true,
+    "image": "/images/products/bpc-157.jpg",
+    "benefits": [
+      "Tendon healing",
+      "Ligament repair",
+      "Muscle recovery",
+      "Gut health",
+      "Anti-inflammatory"
+    ],
+    "usage": "Subcutaneous injection, daily for 4-6 weeks",
+    "tags": [
+      "recovery",
+      "healing",
+      "tendon",
+      "ligament"
+    ]
+  },
+  {
+    "id": "DSIP-5MG",
+    "name": "DSIP 5mg",
+    "category": "recovery",
+    "description": "Delta sleep-inducing peptide for sleep quality and recovery optimization",
+    "price": 1100000,
+    "originalPrice": 1300000,
+    "dosage": "5mg per vial",
+    "purity": "99.3%",
+    "labTested": true,
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/dsip.jpg",
+    "benefits": [
+      "Sleep enhancement",
+      "Recovery optimization",
+      "Stress reduction",
+      "Anti-aging"
+    ],
+    "usage": "Subcutaneous injection, before bed",
+    "tags": [
+      "recovery",
+      "sleep",
+      "stress",
+      "anti-aging"
+    ]
+  },
+  {
+    "id": "KISSPEPTIN-10-10MG",
+    "name": "Kisspeptin-10 10mg",
+    "category": "hormone",
+    "description": "Hormone regulation peptide for fertility and endocrine system support",
+    "price": 1600000,
+    "originalPrice": 1900000,
+    "dosage": "10mg per vial",
+    "purity": "99.5%",
+    "labTested": true,
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/kisspeptin.jpg",
+    "benefits": [
+      "Hormone regulation",
+      "Fertility support",
+      "Endocrine health",
+      "Reproductive health"
+    ],
+    "usage": "Subcutaneous injection, as directed by healthcare provider",
+    "tags": [
+      "hormone",
+      "fertility",
+      "endocrine",
+      "reproductive"
+    ]
+  },
+  {
+    "id": "PT-141-10MG",
+    "name": "PT-141 10mg",
+    "category": "hormone",
+    "description": "Sexual dysfunction treatment peptide for male and female sexual health",
+    "price": 1700000,
+    "originalPrice": 2000000,
+    "dosage": "10mg per vial",
+    "purity": "99.6%",
+    "labTested": true,
+    "inStock": true,
+    "featured": false,
+    "image": "/images/products/pt-141.jpg",
+    "benefits": [
+      "Sexual health",
+      "Libido enhancement",
+      "Erectile function",
+      "Sexual wellness"
+    ],
+    "usage": "Subcutaneous injection, 1-2 hours before activity",
+    "tags": [
+      "hormone",
+      "sexual-health",
+      "libido",
+      "erectile"
+    ]
+  }
+]

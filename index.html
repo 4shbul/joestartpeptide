@@ -936,107 +936,63 @@
                 <h2 class="text-4xl lg:text-6xl font-black navy mb-6 leading-tight">Scientifically Formulated<br><span class="text-3xl lg:text-4xl font-bold text-gray-600">for Optimal Health</span></h2>
                 <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">Each peptide is meticulously crafted using cutting-edge biotechnology, ensuring maximum purity, efficacy, and safety for your health optimization journey.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 lg:gap-12">
-                        <!-- Product Card 1 -->
-                        <div class="product-card">
-                            <div class="molecular-structure"></div>
-                            <h3 class="text-xl font-semibold navy mb-2"><i class="fas fa-atom text-teal mr-2"></i>Retatrutide 10mg</h3>
-                            <p class="text-gray-700 mb-4">Advanced metabolic optimization peptide</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold teal">1.5 JT</span>
-                                <button class="btn-primary text-sm"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
-                            </div>
-                        </div>
 
-                        <!-- Product Card 2 -->
-                        <div class="product-card">
-                            <div class="molecular-structure"></div>
-                            <h3 class="text-xl font-semibold navy mb-2"><i class="fas fa-dna text-teal mr-2"></i>CJC-1295 + Ipamorelin</h3>
-                            <p class="text-gray-700 mb-4">Growth hormone secretagogue blend</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold teal">2.0 JT</span>
-                                <button class="btn-primary text-sm"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
-                            </div>
-                        </div>
+            <!-- Search and Filter Controls -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-12 border border-gray-100">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <!-- Search -->
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                        <input type="text" id="product-search" placeholder="Search peptides..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                    </div>
 
-                        <!-- Product Card 3 -->
-                        <div class="product-card">
-                            <div class="molecular-structure"></div>
-                            <h3 class="text-xl font-semibold navy mb-2"><i class="fas fa-leaf text-teal mr-2"></i>GHK-Cu</h3>
-                            <p class="text-gray-300 mb-4">Tissue repair and anti-aging peptide</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold teal">1.8 JT</span>
-                                <button class="btn-primary text-sm"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
-                            </div>
-                        </div>
+                    <!-- Category Filter -->
+                    <div>
+                        <select id="category-filter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <option value="all">All Categories</option>
+                            <option value="metabolic">Metabolic Peptides</option>
+                            <option value="growth-hormone">Growth Hormone</option>
+                            <option value="anti-aging">Anti-Aging</option>
+                            <option value="cognitive">Cognitive</option>
+                            <option value="recovery">Recovery</option>
+                            <option value="hormone">Hormone Regulation</option>
+                        </select>
+                    </div>
 
-                        <!-- Product Card 4 -->
-                        <div class="product-card">
-                            <div class="molecular-structure"></div>
-                            <h3 class="text-xl font-semibold navy mb-2"><i class="fas fa-brain text-teal mr-2"></i>Semax</h3>
-                            <p class="text-gray-300 mb-4">Cognitive enhancement peptide</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold teal">1.2 JT</span>
-                                <button class="btn-primary text-sm"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
-                            </div>
-                        </div>
+                    <!-- Sort -->
+                    <div>
+                        <select id="sort-filter" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <option value="newest">Newest First</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name">Name A-Z</option>
+                        </select>
+                    </div>
 
-                        <!-- Product Card 5 -->
-                        <div class="product-card">
-                            <div class="molecular-structure"></div>
-                            <h3 class="text-xl font-semibold navy mb-2"><i class="fas fa-smile text-teal mr-2"></i>Selank</h3>
-                            <p class="text-gray-300 mb-4">Anxiety reduction and cognitive support</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold teal">1.0 JT</span>
-                                <button class="btn-primary text-sm"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
-                            </div>
-                        </div>
-
-                        <!-- Product Card 6 -->
-                        <div class="product-card">
-                            <div class="molecular-structure"></div>
-                            <h3 class="text-xl font-semibold navy mb-2"><i class="fas fa-battery-full text-teal mr-2"></i>MOTS-c</h3>
-                            <p class="text-gray-600 mb-4">Metabolic activator peptide</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold teal">1.3 JT</span>
-                                <button class="btn-primary text-sm"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
-                            </div>
-                        </div>
-
-                        <!-- Product Card 7 -->
-                        <div class="product-card">
-                            <div class="molecular-structure"></div>
-                            <h3 class="text-xl font-semibold navy mb-2"><i class="fas fa-moon text-teal mr-2"></i>DSIP</h3>
-                            <p class="text-gray-300 mb-4">Sleep quality and recovery enhancer</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold teal">1.1 JT</span>
-                                <button class="btn-primary text-sm"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
-                            </div>
-                        </div>
-
-                        <!-- Product Card 8 -->
-                        <div class="product-card">
-                            <div class="molecular-structure"></div>
-                            <h3 class="text-xl font-semibold navy mb-2"><i class="fas fa-child text-teal mr-2"></i>HGH 191AA</h3>
-                            <p class="text-gray-300 mb-4">Human growth hormone</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold teal">3.0 JT</span>
-                                <button class="btn-primary text-sm"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
-                            </div>
-                        </div>
-
-                        <!-- Product Card 9 -->
-                        <div class="product-card">
-                            <div class="molecular-structure"></div>
-                            <h3 class="text-xl font-semibold navy mb-2"><i class="fas fa-heart text-teal mr-2"></i>Kisspeptin</h3>
-                            <p class="text-gray-600 mb-4">Hormone regulation peptide</p>
-                            <div class="flex justify-between items-center">
-                                <span class="text-2xl font-bold teal">1.6 JT</span>
-                                <button class="btn-primary text-sm"><i class="fas fa-cart-plus mr-2"></i>Add to Cart</button>
-                            </div>
-                        </div>
+                    <!-- Featured Toggle -->
+                    <div class="flex items-center">
+                        <input type="checkbox" id="featured-only" class="mr-2">
+                        <label for="featured-only" class="text-sm text-gray-600">Featured Only</label>
                     </div>
                 </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="products-loading" class="text-center py-12">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-red-500"></div>
+                <p class="mt-4 text-gray-600">Loading products...</p>
+            </div>
+
+            <!-- Products Grid -->
+            <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-10 lg:gap-12 hidden">
+                <!-- Products will be loaded here -->
+            </div>
+
+            <!-- No Results -->
+            <div id="no-results" class="text-center py-12 hidden">
+                <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
+                <h3 class="text-xl font-semibold text-gray-600 mb-2">No products found</h3>
+                <p class="text-gray-500">Try adjusting your search or filter criteria</p>
             </div>
         </div>
     </section>
@@ -2876,6 +2832,158 @@
             document.getElementById('testimonial-modal').classList.add('hidden');
         }
 
+        // Product loading and filtering
+        let allProducts = [];
+        let filteredProducts = [];
+
+        async function loadProducts() {
+            try {
+                document.getElementById('products-loading').classList.remove('hidden');
+                document.getElementById('products-grid').classList.add('hidden');
+                document.getElementById('no-results').classList.add('hidden');
+
+                const response = await fetch(`${API_BASE}/products`);
+                allProducts = await response.json();
+                filteredProducts = [...allProducts];
+
+                displayProducts(filteredProducts);
+            } catch (error) {
+                console.error('Error loading products:', error);
+                showNotification('Error loading products. Please try again.');
+            } finally {
+                document.getElementById('products-loading').classList.add('hidden');
+            }
+        }
+
+        function displayProducts(products) {
+            const grid = document.getElementById('products-grid');
+
+            if (products.length === 0) {
+                document.getElementById('no-results').classList.remove('hidden');
+                grid.classList.add('hidden');
+                return;
+            }
+
+            document.getElementById('no-results').classList.add('hidden');
+            grid.classList.remove('hidden');
+
+            grid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="molecular-structure" style="background-image: url('${product.image || 'https://via.placeholder.com/200x150?text=' + encodeURIComponent(product.name)}');"></div>
+                    <div class="flex items-center justify-between mb-2">
+                        <h3 class="text-xl font-semibold navy mb-0"><i class="fas fa-${getCategoryIcon(product.category)} text-teal mr-2"></i>${product.name}</h3>
+                        ${product.featured ? '<span class="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full">Featured</span>' : ''}
+                    </div>
+                    <p class="text-gray-700 mb-3 text-sm">${product.description}</p>
+
+                    <div class="mb-4">
+                        <div class="flex items-center space-x-4 text-sm text-gray-600 mb-2">
+                            <span><i class="fas fa-flask mr-1"></i>${product.purity} purity</span>
+                            <span><i class="fas fa-vial mr-1"></i>${product.dosage}</span>
+                        </div>
+                        <div class="flex flex-wrap gap-1">
+                            ${product.benefits.slice(0, 3).map(benefit => `<span class="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">${benefit}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <span class="text-2xl font-bold teal">${product.price.toLocaleString()} IDR</span>
+                            ${product.originalPrice > product.price ? `<span class="text-sm text-gray-500 line-through ml-2">${product.originalPrice.toLocaleString()} IDR</span>` : ''}
+                        </div>
+                        <div class="flex space-x-2">
+                            <button onclick="addToWishlist('${product.id}')" class="text-gray-400 hover:text-red-500 transition-colors">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button onclick="addToCart('${product.name}', ${product.price})" class="btn-primary text-sm">
+                                <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getCategoryIcon(category) {
+            const icons = {
+                'metabolic': 'atom',
+                'growth-hormone': 'dna',
+                'anti-aging': 'leaf',
+                'cognitive': 'brain',
+                'recovery': 'heartbeat',
+                'hormone': 'balance-scale'
+            };
+            return icons[category] || 'flask';
+        }
+
+        async function addToWishlist(productId) {
+            if (!currentUser) {
+                showNotification('Please login to add items to wishlist');
+                openLogin();
+                return;
+            }
+
+            try {
+                await apiRequest(`/user/wishlist/${productId}`, { method: 'POST' });
+                showNotification('Product added to wishlist!');
+            } catch (error) {
+                if (error.message.includes('already in wishlist')) {
+                    showNotification('Product already in wishlist');
+                } else {
+                    showNotification('Error adding to wishlist');
+                }
+            }
+        }
+
+        // Search and filter functionality
+        function applyFilters() {
+            const searchTerm = document.getElementById('product-search').value.toLowerCase();
+            const categoryFilter = document.getElementById('category-filter').value;
+            const sortBy = document.getElementById('sort-filter').value;
+            const featuredOnly = document.getElementById('featured-only').checked;
+
+            filteredProducts = allProducts.filter(product => {
+                // Search filter
+                const matchesSearch = !searchTerm ||
+                    product.name.toLowerCase().includes(searchTerm) ||
+                    product.description.toLowerCase().includes(searchTerm) ||
+                    product.tags.some(tag => tag.toLowerCase().includes(searchTerm));
+
+                // Category filter
+                const matchesCategory = categoryFilter === 'all' || product.category === categoryFilter;
+
+                // Featured filter
+                const matchesFeatured = !featuredOnly || product.featured;
+
+                return matchesSearch && matchesCategory && matchesFeatured;
+            });
+
+            // Sort
+            switch (sortBy) {
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'name':
+                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'newest':
+                default:
+                    // Keep original order
+                    break;
+            }
+
+            displayProducts(filteredProducts);
+        }
+
+        // Event listeners for filters
+        document.getElementById('product-search').addEventListener('input', applyFilters);
+        document.getElementById('category-filter').addEventListener('change', applyFilters);
+        document.getElementById('sort-filter').addEventListener('change', applyFilters);
+        document.getElementById('featured-only').addEventListener('change', applyFilters);
+
         // Initialize
         updateCartDisplay();
         checkAuthStatus();
@@ -2884,6 +2992,7 @@
         initializeJoJoElements();
         loadTestimonials();
         loadEbooks();
+        loadProducts();
     </script>
 </body>
 </html>
