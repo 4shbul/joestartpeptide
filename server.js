@@ -14,10 +14,14 @@ app.use(cors({
     origin: true,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With']
 }));
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
+// Handle preflight requests
+app.options('*', cors());
 
 // Database file path
 const USERS_FILE = path.join(__dirname, 'users.json');
@@ -45,10 +49,12 @@ if (!fs.existsSync(USERS_FILE)) {
 
 // Register new user
 app.post('/api/auth/register', async (req, res) => {
+    console.log('Registration request received:', req.body);
     try {
         const { name, email, password, referralCode } = req.body;
 
         if (!name || !email || !password) {
+            console.log('Missing required fields');
             return res.status(400).json({ message: 'All fields are required' });
         }
 
@@ -56,6 +62,7 @@ app.post('/api/auth/register', async (req, res) => {
         const existingUser = users.find(user => user.email === email);
 
         if (existingUser) {
+            console.log('User already exists:', email);
             return res.status(400).json({ message: 'User with this email already exists' });
         }
 
@@ -72,8 +79,10 @@ app.post('/api/auth/register', async (req, res) => {
 
         // Handle referral code if provided
         if (referralCode) {
+            console.log('Processing referral code:', referralCode);
             const referrer = users.find(user => user.affiliate && user.affiliate.redeemCode === referralCode);
             if (referrer) {
+                console.log('Valid referrer found:', referrer.email);
                 // Initialize affiliate data for referrer if not exists
                 if (!referrer.affiliate) {
                     referrer.affiliate = {
@@ -100,12 +109,15 @@ app.post('/api/auth/register', async (req, res) => {
 
                 // Note: Commission will be added when the referred user makes a purchase
                 // This is tracked via the /api/affiliate/track endpoint
+            } else {
+                console.log('Invalid referral code:', referralCode);
             }
             // If referral code is invalid, we still allow registration but don't track it
         }
 
         users.push(newUser);
         writeUsers(users);
+        console.log('User created successfully:', newUser.email);
 
         // Create JWT token
         const token = jwt.sign(
@@ -125,32 +137,39 @@ app.post('/api/auth/register', async (req, res) => {
         });
     } catch (error) {
         console.error('Registration error:', error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error: ' + error.message });
     }
 });
 
 // Login user
 app.post('/api/auth/login', async (req, res) => {
+    console.log('Login request received:', req.body);
     try {
         const { email, password } = req.body;
 
         if (!email || !password) {
+            console.log('Missing email or password');
             return res.status(400).json({ message: 'Email and password are required' });
         }
 
         const users = readUsers();
+        console.log('Total users in database:', users.length);
         const user = users.find(u => u.email === email);
 
         if (!user) {
+            console.log('User not found:', email);
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
+        console.log('User found, checking password');
         // Check password
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (!isValidPassword) {
+            console.log('Invalid password for user:', email);
             return res.status(401).json({ message: 'Invalid email or password' });
         }
 
+        console.log('Login successful for user:', email);
         // Create JWT token
         const token = jwt.sign(
             { userId: user.id, email: user.email },
@@ -169,7 +188,7 @@ app.post('/api/auth/login', async (req, res) => {
         });
     } catch (error) {
         console.error('Login error:', error);
-        res.status(500).json({ message: 'Server error' });
+        res.status(500).json({ message: 'Server error: ' + error.message });
     }
 });
 
