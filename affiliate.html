@@ -355,6 +355,115 @@
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 40px auto;
+            max-width: 800px;
+        }
+
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #dc2626, #ec4899);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .card-icon i {
+            font-size: 20px;
+            color: white;
+        }
+
+        .card-value {
+            font-size: 32px;
+            font-weight: 800;
+            color: #dc2626;
+            margin-bottom: 4px;
+        }
+
+        .card-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #6b7280;
+        }
+
+        .referral-code-section {
+            margin: 32px auto;
+            max-width: 400px;
+        }
+
+        .referral-code-section h3 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 16px;
+        }
+
+        .code-display {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+        }
+
+        .code-display code {
+            flex: 1;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 18px;
+            font-weight: 600;
+            color: #dc2626;
+            background: none;
+            border: none;
+            outline: none;
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #dc2626, #ec4899);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .copy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+        }
+
+        .code-info {
+            font-size: 14px;
+            color: #6b7280;
+            text-align: center;
+        }
+
         @media (max-width: 768px) {
             .affiliate-hero {
                 padding: 32px 24px;
@@ -371,6 +480,12 @@
                 margin: 40px auto;
             }
 
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                margin: 32px auto;
+            }
+
             .steps-grid {
                 grid-template-columns: 1fr;
                 gap: 24px;
@@ -379,6 +494,15 @@
             .btn-primary, .btn-secondary {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .code-display {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .code-display code {
+                text-align: center;
             }
         }
     </style>
@@ -400,17 +524,7 @@
         <div class="dashboard-stats">
             <div class="dashboard-card">
                 <div class="card-icon">
-                    <i class="fas fa-coins"></i>
-                </div>
-                <div class="card-content">
-                    <div class="card-value" id="total-commission">Rp 0</div>
-                    <div class="card-label">Total Commission</div>
-                </div>
-            </div>
-
-            <div class="dashboard-card">
-                <div class="card-icon">
-                    <i class="fas fa-users"></i>
+                    <i class="fas fa-tags"></i>
                 </div>
                 <div class="card-content">
                     <div class="card-value" id="total-referrals">0</div>
@@ -420,11 +534,21 @@
 
             <div class="dashboard-card">
                 <div class="card-icon">
-                    <i class="fas fa-wallet"></i>
+                    <i class="fas fa-percentage"></i>
                 </div>
                 <div class="card-content">
-                    <div class="card-value" id="available-balance">Rp 0</div>
-                    <div class="card-label">Available Balance</div>
+                    <div class="card-value" id="discount-rate">20%</div>
+                    <div class="card-label">Your Discount</div>
+                </div>
+            </div>
+
+            <div class="dashboard-card">
+                <div class="card-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="card-content">
+                    <div class="card-value" id="affiliate-level">Bronze</div>
+                    <div class="card-label">Affiliate Level</div>
                 </div>
             </div>
         </div>
@@ -599,24 +723,95 @@
             }
         }
 
-        // Check if user is already logged in and redirect to dashboard
+        // Check if user is already logged in and show appropriate content
         window.addEventListener('DOMContentLoaded', async function() {
             const token = localStorage.getItem('joestarToken');
             if (token) {
                 try {
-                    // Verify token is still valid
-                    await apiRequest('/auth/profile');
-                    // If logged in, show dashboard option
-                    const dashboardBtn = document.querySelector('.btn-secondary');
-                    if (dashboardBtn) {
-                        dashboardBtn.style.display = 'inline-flex';
-                    }
+                    // Verify token is still valid and load dashboard
+                    await loadAffiliateDashboard();
                 } catch (error) {
-                    // Token is invalid, remove it
+                    // Token is invalid, remove it and show landing page
                     localStorage.removeItem('joestarToken');
+                    showLandingPage();
                 }
+            } else {
+                showLandingPage();
             }
         });
+
+        // Load affiliate dashboard data
+        async function loadAffiliateDashboard() {
+            try {
+                const data = await apiRequest('/affiliate/dashboard');
+
+                // Update dashboard stats
+                document.getElementById('total-referrals').textContent = data.affiliate.referrals ? data.affiliate.referrals.length : 0;
+                document.getElementById('affiliate-level').textContent = data.affiliate.level || 'Bronze';
+                document.getElementById('referral-code').textContent = data.affiliate.redeemCode || 'Not available';
+
+                // Show dashboard, hide landing page
+                document.getElementById('affiliate-dashboard').style.display = 'block';
+                document.getElementById('affiliate-landing').style.display = 'none';
+
+            } catch (error) {
+                console.error('Failed to load dashboard:', error);
+                showLandingPage();
+            }
+        }
+
+        // Show landing page for non-logged-in users
+        function showLandingPage() {
+            document.getElementById('affiliate-dashboard').style.display = 'none';
+            document.getElementById('affiliate-landing').style.display = 'block';
+        }
+
+        // Copy referral code to clipboard
+        function copyReferralCode() {
+            const codeElement = document.getElementById('referral-code');
+            const code = codeElement.textContent;
+
+            if (code && code !== 'Loading...' && code !== 'Not available') {
+                navigator.clipboard.writeText(code).then(function() {
+                    // Show success feedback
+                    const copyBtn = document.querySelector('.copy-btn');
+                    const originalText = copyBtn.innerHTML;
+                    copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    copyBtn.style.background = 'linear-gradient(135deg, #059669, #10b981)';
+
+                    setTimeout(() => {
+                        copyBtn.innerHTML = originalText;
+                        copyBtn.style.background = 'linear-gradient(135deg, #dc2626, #ec4899)';
+                    }, 2000);
+                }).catch(function(err) {
+                    console.error('Failed to copy code:', err);
+                    alert('Failed to copy code to clipboard');
+                });
+            }
+        }
+
+        // Generate referral link
+        function generateReferralLink() {
+            const codeElement = document.getElementById('referral-code');
+            const code = codeElement.textContent;
+
+            if (code && code !== 'Loading...' && code !== 'Not available') {
+                const referralLink = `https://joestarpeptide.com?ref=${code}`;
+
+                navigator.clipboard.writeText(referralLink).then(function() {
+                    alert('Referral link copied to clipboard!\n\n' + referralLink);
+                }).catch(function(err) {
+                    console.error('Failed to copy link:', err);
+                    alert('Failed to copy link to clipboard');
+                });
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('joestarToken');
+            showLandingPage();
+        }
     </script>
 </body>
 </html>

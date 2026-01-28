@@ -287,27 +287,48 @@ app.put('/api/auth/change-password', authenticateToken, async (req, res) => {
 // Get affiliate dashboard data
 app.get('/api/affiliate/dashboard', authenticateToken, (req, res) => {
     const users = readUsers();
-    const user = users.find(u => u.id === req.user.userId);
+    const userIndex = users.findIndex(u => u.id === req.user.userId);
 
-    if (!user) {
+    if (userIndex === -1) {
         return res.status(404).json({ message: 'User not found' });
     }
 
     // Initialize affiliate data if not exists
-    if (!user.affiliate) {
-        user.affiliate = {
-            redeemCode: `JOESTAR${user.id.slice(-4).toUpperCase()}`,
+    if (!users[userIndex].affiliate) {
+        const redeemCode = `JOESTAR${users[userIndex].id.slice(-4).toUpperCase()}`;
+        users[userIndex].affiliate = {
+            redeemCode: redeemCode,
             referrals: [],
             commission: 0,
             totalEarned: 0,
             level: 'Bronze'
         };
+
+        // Generate a discount code for the affiliate
+        const discountCodes = readDiscountCodes();
+        const existingCode = discountCodes.find(c => c.code === redeemCode);
+        if (!existingCode) {
+            const newDiscountCode = {
+                id: `AFFILIATE_${users[userIndex].id}`,
+                code: redeemCode,
+                discount: 20,
+                type: 'percentage',
+                maxUses: 1,
+                usedCount: 0,
+                validUntil: '2024-12-31',
+                active: true,
+                description: `Affiliate discount code for ${users[userIndex].name}`
+            };
+            discountCodes.push(newDiscountCode);
+            writeDiscountCodes(discountCodes);
+        }
+
         writeUsers(users);
     }
 
     res.json({
-        affiliate: user.affiliate,
-        referralLink: `https://joestarpeptide.com?ref=${user.affiliate.redeemCode}`
+        affiliate: users[userIndex].affiliate,
+        referralLink: `https://joestarpeptide.com?ref=${users[userIndex].affiliate.redeemCode}`
     });
 });
 
