@@ -2,8 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const fs = require('fs');
-const path = require('path');
+const { initDatabase, statements } = require('./database');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -23,27 +22,8 @@ app.use(express.static('public'));
 // Handle preflight requests
 app.options('*', cors());
 
-// Database file path
-const USERS_FILE = path.join(__dirname, 'users.json');
-
-// Helper functions
-const readUsers = () => {
-    try {
-        const data = fs.readFileSync(USERS_FILE, 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        return [];
-    }
-};
-
-const writeUsers = (users) => {
-    fs.writeFileSync(USERS_FILE, JSON.stringify(users, null, 2));
-};
-
-// Initialize users file if it doesn't exist
-if (!fs.existsSync(USERS_FILE)) {
-    writeUsers([]);
-}
+// Initialize database
+initDatabase();
 
 // Routes
 
@@ -58,9 +38,8 @@ app.post('/api/auth/register', async (req, res) => {
             return res.status(400).json({ message: 'All fields are required' });
         }
 
-        const users = readUsers();
-        const existingUser = users.find(user => user.email === email);
-
+        // Check if user already exists
+        const existingUser = statements.getUserByEmail.get(email);
         if (existingUser) {
             console.log('User already exists:', email);
             return res.status(400).json({ message: 'User with this email already exists' });
@@ -69,59 +48,15 @@ app.post('/api/auth/register', async (req, res) => {
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const newUser = {
-            id: Date.now().toString(),
-            name,
-            email,
-            password: hashedPassword,
-            createdAt: new Date().toISOString()
-        };
+        // Create user
+        const result = statements.createUser.run(name, email, hashedPassword, null);
+        const newUserId = result.lastInsertRowid;
 
-        // Handle referral code if provided
-        if (referralCode) {
-            console.log('Processing referral code:', referralCode);
-            const referrer = users.find(user => user.affiliate && user.affiliate.redeemCode === referralCode);
-            if (referrer) {
-                console.log('Valid referrer found:', referrer.email);
-                // Initialize affiliate data for referrer if not exists
-                if (!referrer.affiliate) {
-                    referrer.affiliate = {
-                        redeemCode: `JOESTAR${referrer.id.slice(-4).toUpperCase()}`,
-                        referrals: [],
-                        commission: 0,
-                        totalEarned: 0,
-                        level: 'Bronze'
-                    };
-                }
-
-                // Add referral to referrer's data
-                if (!referrer.affiliate.referrals) {
-                    referrer.affiliate.referrals = [];
-                }
-
-                referrer.affiliate.referrals.push({
-                    id: newUser.id,
-                    name: newUser.name,
-                    email: newUser.email,
-                    date: new Date().toISOString(),
-                    status: 'registered'
-                });
-
-                // Note: Commission will be added when the referred user makes a purchase
-                // This is tracked via the /api/affiliate/track endpoint
-            } else {
-                console.log('Invalid referral code:', referralCode);
-            }
-            // If referral code is invalid, we still allow registration but don't track it
-        }
-
-        users.push(newUser);
-        writeUsers(users);
-        console.log('User created successfully:', newUser.email);
+        console.log('User created successfully:', email);
 
         // Create JWT token
         const token = jwt.sign(
-            { userId: newUser.id, email: newUser.email },
+            { userId: newUserId, email: email },
             JWT_SECRET,
             { expiresIn: '7d' }
         );
@@ -129,9 +64,9 @@ app.post('/api/auth/register', async (req, res) => {
         res.status(201).json({
             message: 'User created successfully',
             user: {
-                id: newUser.id,
-                name: newUser.name,
-                email: newUser.email
+                id: newUserId,
+                name: name,
+                email: email
             },
             token
         });
@@ -152,9 +87,7 @@ app.post('/api/auth/login', async (req, res) => {
             return res.status(400).json({ message: 'Email and password are required' });
         }
 
-        const users = readUsers();
-        console.log('Total users in database:', users.length);
-        const user = users.find(u => u.email === email);
+        const user = statements.getUserByEmail.get(email);
 
         if (!user) {
             console.log('User not found:', email);
@@ -212,8 +145,7 @@ const authenticateToken = (req, res, next) => {
 
 // Get user profile
 app.get('/api/auth/profile', authenticateToken, (req, res) => {
-    const users = readUsers();
-    const user = users.find(u => u.id === req.user.userId);
+    const user = statements.getUserById.get(req.user.userId);
 
     if (!user) {
         return res.status(404).json({ message: 'User not found' });
@@ -224,7 +156,7 @@ app.get('/api/auth/profile', authenticateToken, (req, res) => {
             id: user.id,
             name: user.name,
             email: user.email,
-            createdAt: user.createdAt
+            createdAt: user.created_at
         }
     });
 });
@@ -302,152 +234,7 @@ app.put('/api/auth/change-password', authenticateToken, async (req, res) => {
     }
 });
 
-// Affiliate System
-// Get affiliate dashboard data
-app.get('/api/affiliate/dashboard', authenticateToken, (req, res) => {
-    const users = readUsers();
-    const userIndex = users.findIndex(u => u.id === req.user.userId);
 
-    if (userIndex === -1) {
-        return res.status(404).json({ message: 'User not found' });
-    }
-
-    // Initialize affiliate data if not exists
-    if (!users[userIndex].affiliate) {
-        const redeemCode = `JOESTAR${users[userIndex].id.slice(-4).toUpperCase()}`;
-        users[userIndex].affiliate = {
-            redeemCode: redeemCode,
-            referrals: [],
-            commission: 0,
-            totalEarned: 0,
-            level: 'Bronze'
-        };
-
-        // Generate a discount code for the affiliate
-        const discountCodes = readDiscountCodes();
-        const existingCode = discountCodes.find(c => c.code === redeemCode);
-        if (!existingCode) {
-            const newDiscountCode = {
-                id: `AFFILIATE_${users[userIndex].id}`,
-                code: redeemCode,
-                discount: 20,
-                type: 'percentage',
-                maxUses: 1,
-                usedCount: 0,
-                validUntil: '2024-12-31',
-                active: true,
-                description: `Affiliate discount code for ${users[userIndex].name}`
-            };
-            discountCodes.push(newDiscountCode);
-            writeDiscountCodes(discountCodes);
-        }
-
-        writeUsers(users);
-    }
-
-    res.json({
-        affiliate: users[userIndex].affiliate,
-        referralLink: `https://joestarpeptide.com?ref=${users[userIndex].affiliate.redeemCode}`
-    });
-});
-
-// Generate affiliate redeem code
-app.post('/api/affiliate/generate-code', authenticateToken, (req, res) => {
-    const users = readUsers();
-    const userIndex = users.findIndex(u => u.id === req.user.userId);
-
-    if (userIndex === -1) {
-        return res.status(404).json({ message: 'User not found' });
-    }
-
-    if (!users[userIndex].affiliate) {
-        const redeemCode = `JOESTAR${users[userIndex].id.slice(-4).toUpperCase()}`;
-        users[userIndex].affiliate = {
-            redeemCode: redeemCode,
-            referrals: [],
-            commission: 0,
-            totalEarned: 0,
-            level: 'Bronze'
-        };
-
-        // Generate a discount code for the affiliate
-        const discountCodes = readDiscountCodes();
-        const existingCode = discountCodes.find(c => c.code === redeemCode);
-        if (!existingCode) {
-            const newDiscountCode = {
-                id: `AFFILIATE_${users[userIndex].id}`,
-                code: redeemCode,
-                discount: 20,
-                type: 'percentage',
-                maxUses: 1,
-                usedCount: 0,
-                validUntil: '2024-12-31',
-                active: true,
-                description: `Affiliate discount code for ${users[userIndex].name}`
-            };
-            discountCodes.push(newDiscountCode);
-            writeDiscountCodes(discountCodes);
-        }
-    }
-
-    writeUsers(users);
-
-    res.json({
-        message: 'Affiliate redeem code generated successfully',
-        affiliate: users[userIndex].affiliate,
-        referralLink: `https://joestarpeptide.com?ref=${users[userIndex].affiliate.redeemCode}`
-    });
-});
-
-// Track referral (when someone uses affiliate redeem code)
-app.post('/api/affiliate/track', (req, res) => {
-    const { affiliateCode, orderAmount } = req.body;
-
-    if (!affiliateCode || !orderAmount) {
-        return res.status(400).json({ message: 'Affiliate code and order amount are required' });
-    }
-
-    const users = readUsers();
-    const affiliateUser = users.find(u => u.affiliate && u.affiliate.redeemCode === affiliateCode);
-
-    if (!affiliateUser) {
-        return res.status(404).json({ message: 'Invalid affiliate code' });
-    }
-
-    // Calculate commission (4% of order amount)
-    const commission = orderAmount * 0.04;
-
-    // Add referral
-    if (!affiliateUser.affiliate.referrals) {
-        affiliateUser.affiliate.referrals = [];
-    }
-
-    affiliateUser.affiliate.referrals.push({
-        id: Date.now().toString(),
-        amount: orderAmount,
-        commission: commission,
-        date: new Date().toISOString()
-    });
-
-    affiliateUser.affiliate.commission += commission;
-    affiliateUser.affiliate.totalEarned += commission;
-
-    // Update affiliate level based on total earned
-    if (affiliateUser.affiliate.totalEarned >= 1000000) {
-        affiliateUser.affiliate.level = 'Diamond';
-    } else if (affiliateUser.affiliate.totalEarned >= 500000) {
-        affiliateUser.affiliate.level = 'Gold';
-    } else if (affiliateUser.affiliate.totalEarned >= 100000) {
-        affiliateUser.affiliate.level = 'Silver';
-    }
-
-    writeUsers(users);
-
-    res.json({
-        message: 'Referral tracked successfully',
-        commission: commission
-    });
-});
 
 // Discount Code System
 const DISCOUNT_CODES_FILE = path.join(__dirname, 'discount-codes.json');
@@ -1429,6 +1216,76 @@ app.post('/api/contact', (req, res) => {
     console.log('Contact form submission:', { name, email, subject, message });
 
     res.json({ message: 'Message sent successfully. We will get back to you soon!' });
+});
+
+// Blog System
+// Get all blog posts
+app.get('/api/blog', (req, res) => {
+    try {
+        const { category, featured, limit } = req.query;
+        let posts = statements.getAllBlogPosts.all();
+
+        // Filter by category
+        if (category && category !== 'all') {
+            posts = posts.filter(post => post.category === category);
+        }
+
+        // Filter by featured
+        if (featured === 'true') {
+            posts = posts.filter(post => post.featured === 1);
+        }
+
+        // Sort by published date (newest first)
+        posts.sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
+
+        // Limit results
+        if (limit) {
+            posts = posts.slice(0, parseInt(limit));
+        }
+
+        res.json(posts);
+    } catch (error) {
+        console.error('Error fetching blog posts:', error);
+        res.status(500).json({ message: 'Error fetching blog posts' });
+    }
+});
+
+// Get blog post by slug
+app.get('/api/blog/:slug', (req, res) => {
+    try {
+        const post = statements.getBlogPostBySlug.get(req.params.slug);
+
+        if (!post) {
+            return res.status(404).json({ message: 'Blog post not found' });
+        }
+
+        res.json(post);
+    } catch (error) {
+        console.error('Error fetching blog post:', error);
+        res.status(500).json({ message: 'Error fetching blog post' });
+    }
+});
+
+// Get blog categories
+app.get('/api/blog/categories/list', (req, res) => {
+    try {
+        const posts = statements.getAllBlogPosts.all();
+        const categories = [...new Set(posts.map(post => post.category))];
+
+        const categoryInfo = {
+            'Education': { name: 'Education', description: 'Educational content about peptides', count: posts.filter(p => p.category === 'Education').length },
+            'Growth Hormone': { name: 'Growth Hormone', description: 'Articles about growth hormone peptides', count: posts.filter(p => p.category === 'Growth Hormone').length },
+            'Anti-Aging': { name: 'Anti-Aging', description: 'Anti-aging peptide research and guides', count: posts.filter(p => p.category === 'Anti-Aging').length },
+            'Cognitive': { name: 'Cognitive', description: 'Cognitive enhancement and nootropics', count: posts.filter(p => p.category === 'Cognitive').length },
+            'Recovery': { name: 'Recovery', description: 'Recovery and healing peptides', count: posts.filter(p => p.category === 'Recovery').length },
+            'Metabolic': { name: 'Metabolic', description: 'Metabolic health and weight management', count: posts.filter(p => p.category === 'Metabolic').length }
+        };
+
+        res.json(categoryInfo);
+    } catch (error) {
+        console.error('Error fetching blog categories:', error);
+        res.status(500).json({ message: 'Error fetching blog categories' });
+    }
 });
 
 // Health check
